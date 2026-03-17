@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mukamuka Munter — WRECkd.runs.nz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #C8231E;
+    --ink: #0a0a0a;
+    --paper: #f0ede6;
+    --topo: #cfd4c5;
+    --grid: rgba(0,160,160,0.18);
+    --muted: #3a3a38;
+    --line: 1px solid #0a0a0a;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── GRID OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── HERO ── */
+  .hero {
+    border-bottom: var(--line);
+    padding: 48px 0 0;
+    overflow: hidden;
+  }
+  .hero-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 14vw, 160px);
+    line-height: 0.9;
+    color: var(--red);
+    letter-spacing: -0.01em;
+    margin-bottom: 0;
+    text-transform: uppercase;
+  }
+  .hero-subtitle {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 5vw, 52px);
+    line-height: 1;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+    margin-top: 4px;
+  }
+  .hero-meta-row {
+    display: flex;
+    gap: 0;
+    border-top: var(--line);
+    margin-top: 32px;
+  }
+  .hero-stat {
+    flex: 1;
+    padding: 16px 20px;
+    border-right: var(--line);
+  }
+  .hero-stat:last-child { border-right: none; }
+  .hero-stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--red);
+    line-height: 1;
+    display: block;
+  }
+  .hero-stat-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-top: 2px;
+    display: block;
+  }
+
+  /* ── TWO COL ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: var(--line);
+  }
+  .two-col > * { border-right: var(--line); padding: 36px 28px; }
+  .two-col > *:last-child { border-right: none; }
+
+  @media (max-width: 700px) {
+    .two-col { grid-template-columns: 1fr; }
+    .two-col > * { border-right: none; border-bottom: var(--line); }
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    border-bottom: var(--line);
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+
+  h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    line-height: 1;
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
+  }
+
+  p { margin-bottom: 14px; line-height: 1.75; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── MAP SECTION ── */
+  .map-section {
+    border-bottom: var(--line);
+  }
+  .map-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 28px;
+    border-bottom: var(--line);
+  }
+  .map-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.04em;
+  }
+  .map-coords {
+    font-size: 11px;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .map-container {
+    position: relative;
+    height: 480px;
+    overflow: hidden;
+  }
+  .map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+    filter: sepia(15%) saturate(90%);
+  }
+  .map-overlay-label {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: var(--red);
+    color: var(--paper);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 5px 10px;
+    pointer-events: none;
+  }
+  .map-legend {
+    display: flex;
+    gap: 0;
+    border-top: var(--line);
+  }
+  .map-legend-item {
+    flex: 1;
+    padding: 12px 20px;
+    border-right: var(--line);
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .map-legend-item:last-child { border-right: none; }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .dot-start { background: #2d9a2d; }
+  .dot-end { background: var(--red); }
+  .dot-high { background: #6a4c93; }
+
+  /* ── VIDEO ── */
+  .video-section { border-bottom: var(--line); }
+  .video-header {
+    padding: 20px 28px;
+    border-bottom: var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .video-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.04em;
+  }
+  .video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    background: var(--ink);
+  }
+  .video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  /* ── COURSE NOTES ── */
+  .course-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: var(--line);
+  }
+  .course-grid > * {
+    padding: 28px 24px;
+    border-right: var(--line);
+  }
+  .course-grid > *:last-child { border-right: none; }
+  @media (max-width: 700px) {
+    .course-grid { grid-template-columns: 1fr; }
+    .course-grid > * { border-right: none; border-bottom: var(--line); }
+  }
+
+  .course-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    line-height: 1;
+    color: var(--red);
+    opacity: 0.15;
+    margin-bottom: -8px;
+  }
+  .course-phase {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    margin-bottom: 8px;
+    letter-spacing: 0.04em;
+  }
+  .course-km {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  /* ── GEAR LIST ── */
+  .gear-section {
+    border-bottom: var(--line);
+  }
+  .gear-inner { padding: 32px 28px; }
+  .gear-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    margin-top: 20px;
+  }
+  .gear-item {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(10,10,10,0.12);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 12px;
+  }
+  .gear-item-req {
+    width: 36px;
+    text-align: center;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 2px 4px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .req { background: var(--red); color: var(--paper); }
+  .rec { border: 1px solid var(--muted); color: var(--muted); }
+
+  .gear-col { padding: 0 12px; }
+  .gear-col:first-child { padding-left: 0; border-right: var(--line); }
+
+  /* ── ENTER SECTION ── */
+  .enter-section {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 64px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .enter-section::before {
+    content: 'ENTER';
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 320px;
+    opacity: 0.04;
+    color: var(--paper);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    white-space: nowrap;
+    letter-spacing: -0.02em;
+  }
+  .enter-tagline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 7vw, 72px);
+    line-height: 1;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .enter-desc {
+    font-size: 12px;
+    color: rgba(240,237,230,0.6);
+    max-width: 480px;
+    margin: 0 auto 32px;
+    position: relative;
+    line-height: 1.8;
+  }
+  .btn-enter {
+    display: inline-block;
+    background: var(--red);
+    color: var(--paper);
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+    padding: 16px 48px;
+    border: 1px solid var(--red);
+    position: relative;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .btn-enter:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: var(--line);
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+
+  /* ── TICKER ── */
+  .ticker {
+    overflow: hidden;
+    border-bottom: var(--line);
+    border-top: var(--line);
+    background: var(--red);
+    padding: 8px 0;
+    white-space: nowrap;
+  }
+  .ticker-inner {
+    display: inline-block;
+    animation: ticker 18s linear infinite;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.1em;
+    color: var(--paper);
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── FULL-WIDTH SECTIONS ── */
+  .fw-section { border-bottom: var(--line); }
+
+</style>
+</head>
+<body>
+
+
+<!-- HERO -->
+<div class="page">
+  <section class="hero">
+    <p class="hero-label">WRECkd.runs.nz &nbsp;/&nbsp; Race Series</p>
+    <h1 class="hero-title">Mukamuka<br>Munter</h1>
+    <p class="hero-subtitle">Wellington's Best Micro Adventure</p>
+    <div class="hero-meta-row">
+      <div class="hero-stat">
+        <span class="hero-stat-val">32K</span>
+        <span class="hero-stat-label">Distance</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-val">900m</span>
+        <span class="hero-stat-label">Elevation Gain</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-val">3–5h</span>
+        <span class="hero-stat-label">Est. Finish Time</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-val">$70</span>
+        <span class="hero-stat-label">Entry Fee</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-val">TBC</span>
+        <span class="hero-stat-label">Race Date</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- INTRO TWO COL -->
+<div class="page">
+  <div class="two-col">
+    <div>
+      <p class="section-label">The Race</p>
+      <h2>Gnarly.<br>Raw.<br>Unmissable.</h2>
+      <p>The Mukamuka Munter starts where the Orongorongo River meets the sea and ends in the Catchpool Valley — passing through everything Wellington's wilderness has to throw at you.</p>
+      <p>Coast, canyon, summit, forest. You'll be wet, you'll be tired, and you'll want to do it again the very next day.</p>
+    </div>
+    <div>
+      <p class="section-label">The Route</p>
+      <p style="margin-top: 8px;">Start at the Orongorongo River mouth. Head east along the wild South Wairarapa coastline for 12km of big surf and karaka trees.</p>
+      <p>Enter the canyon-like Mukamuka Stream valley — rock-hopping, river crossings, narrowing walls. Climb steeply to South Saddle.</p>
+      <p>Descend Mt Matthews Track to the Orongorongo River. Cross to Big Bend Track. Follow Catchpool Stream west to the finish.</p>
+      <p style="margin-top: 20px; font-size: 11px; color: var(--muted); font-style: italic;">This is NOT a fully marked course. Marshals and DOC triangles are at key points. Bring a map.</p>
+    </div>
+  </div>
+</div>
+
+<!-- TOPO MAP -->
+<div class="page">
+  <section class="map-section">
+    <div class="map-header">
+      <span class="map-title">Course Map — Rimutaka Forest Park</span>
+      <span class="map-coords">41.3700°S / 174.9200°E</span>
+    </div>
+    <div class="map-container">
+      <!-- OpenTopoMap via Leaflet, centred on Mukamuka / Orongorongo area -->
+      <iframe
+        src="https://www.openstreetmap.org/export/embed.html?bbox=174.85%2C-41.45%2C175.00%2C-41.30&amp;layer=cyclemap&amp;marker=-41.365%2C174.935"
+        title="Mukamuka Munter course area topo map"
+        loading="lazy"
+        referrerpolicy="no-referrer"
+      ></iframe>
+      <span class="map-overlay-label">Topo — OpenCycleMap</span>
+    </div>
+    <div class="map-legend">
+      <div class="map-legend-item"><span class="dot dot-start"></span>Start — Orongorongo River Mouth</div>
+      <div class="map-legend-item"><span class="dot dot-high"></span>High Point — South Saddle (~700m)</div>
+      <div class="map-legend-item"><span class="dot dot-end"></span>Finish — Catchpool Visitor Centre</div>
+    </div>
+  </section>
+</div>
+
+<!-- VIDEO -->
+<div class="page">
+  <section class="video-section">
+    <div class="video-header">
+      <span class="video-title">Race Footage</span>
+      <span style="font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em;">2024 Edition</span>
+    </div>
+    <div class="video-wrapper">
+      <!-- Replace VIDEO_ID with the actual YouTube video ID for Mukamuka Munter -->
+      <iframe
+        src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&modestbranding=1"
+        title="Mukamuka Munter race footage"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        loading="lazy"
+      ></iframe>
+    </div>
+  </section>
+</div>
+
+
+
+<!-- MANDATORY GEAR -->
+<div class="page">
+  <section class="gear-section">
+    <div class="gear-inner">
+      <p class="section-label">Mandatory &amp; Recommended Gear</p>
+      <h2>Come Prepared.</h2>
+      <p style="max-width: 600px; color: var(--muted);">Gear is checked before your race pack is issued. There is no phone coverage for large sections. The Orongorongo River is deadly when high. This is a real backcountry environment.</p>
+      <div class="gear-grid">
+        <div class="gear-col">
+          <div class="gear-item"><span class="gear-item-req req">REQ</span>Thermal top &amp; bottoms (polypropylene)</div>
+          <div class="gear-item"><span class="gear-item-req req">REQ</span>Waterproof jacket, full length</div>
+          <div class="gear-item"><span class="gear-item-req req">REQ</span>Topo map — 1:50,000 covering full route</div>
+          <div class="gear-item"><span class="gear-item-req req">REQ</span>Compass</div>
+          <div class="gear-item"><span class="gear-item-req req">REQ</span>Emergency food — 500kJ minimum</div>
+          <div class="gear-item"><span class="gear-item-req req">REQ</span>First aid kit</div>
+          <div class="gear-item"><span class="gear-item-req req">REQ</span>Survival blanket or bivy</div>
+          <div class="gear-item"><span class="gear-item-req req">REQ</span>Whistle</div>
+        </div>
+        <div class="gear-col" style="padding-left: 28px;">
+          <div class="gear-item"><span class="gear-item-req rec">REC</span>NZ Topo50 Offline app (Google/Apple)</div>
+          <div class="gear-item"><span class="gear-item-req rec">REC</span>GPS unit (e.g. Garmin eTrex 10)</div>
+          <div class="gear-item"><span class="gear-item-req rec">REC</span>Gaiters — the valley is wet</div>
+          <div class="gear-item"><span class="gear-item-req rec">REC</span>Poles for the saddle descent</div>
+          <div class="gear-item"><span class="gear-item-req rec">REC</span>Water purification tablets</div>
+          <div class="gear-item"><span class="gear-item-req rec">REC</span>Headlamp if entering early or slow</div>
+          <div class="gear-item"><span class="gear-item-req rec">REC</span>Sun protection — coast is exposed</div>
+          <div class="gear-item"><span class="gear-item-req rec">REC</span>Change of dry clothes at finish</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- MEGA MUNTER CALLOUT -->
+<div class="page">
+  <div class="two-col">
+    <div style="background: var(--ink); color: var(--paper);">
+      <p class="section-label" style="color: rgba(240,237,230,0.5);">For the masochists</p>
+      <h2 style="color: var(--red);">Mega<br>Munter</h2>
+      <p style="color: rgba(240,237,230,0.75);">48–50km &nbsp;|&nbsp; 2,300m vert &nbsp;|&nbsp; 5–10hrs</p>
+      <p style="color: rgba(240,237,230,0.6); margin-top: 16px;">The Mega adds the East Whakanui and Mckerrow tracks, Clay Ridge, and another river crossing to the standard course. You must have completed the 32km Munter or an equivalent race within 24 months to enter.</p>
+    </div>
+    <div>
+      <p class="section-label">Race Day</p>
+      <h2>Logistics</h2>
+      <p><strong>Start:</strong> Orongorongo River Mouth</p>
+      <p><strong>Finish:</strong> Catchpool Visitor Centre, DOC carpark</p>
+      <p><strong>Registration:</strong> 6:30–7:15am. Gear check required.</p>
+      <p><strong>Bag drop:</strong> Available at Catchpool Visitor Centre for finish.</p>
+      <p><strong>Prizegiving:</strong> At the Catchpool DOC office. Merit prizes for 1st–3rd. Spot prizes for all finishers on hand.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ENTER CTA -->
+<section class="enter-section" id="enter">
+  <p class="enter-tagline">Ready to<br>Get Munted?</p>
+  <p class="enter-desc">Entry fee: $70 via internet banking.<br>Account: Aorangi Undulator &nbsp;02-0576-0059160-001<br>Reference: MM/your-name</p>
+  <a href="https://wreckd.runs.nz" class="btn-enter">Enter via WRECkd.runs.nz</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© WRECkd.runs.nz</span>
+  <span>Mukamuka Munter &nbsp;·&nbsp; Rimutaka Forest Park &nbsp;·&nbsp; Aotearoa</span>
+  <span>we call it running.</span>
+</footer>
+
+</body>
+</html>
