@@ -580,6 +580,10 @@
 
  <script>
 
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
 const map = L.map('munter-map', {
   zoomControl: true,
   scrollWheelZoom: false
@@ -600,7 +604,11 @@ L.marker([-41.34,174.95]).addTo(map)
   .bindPopup("South Saddle (~700m)");
 
 L.marker([-41.31,174.93]).addTo(map)
-  .bindPopup("Finish — Catchpool");
+  .bindPopup("Finish — Catchpool Visitor Centre");
+
+});
+
+</script>
 </script>
 
 
