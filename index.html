@@ -585,18 +585,14 @@ const map = L.map('munter-map', {
   scrollWheelZoom: false
 }).setView([-41.365, 174.935], 12);
 
-
-// LINZ Topo50 Raster Tiles
 L.tileLayer(
-  'https://tiles-a.data-cdn.linz.govt.nz/services;key=ac0b45ad4df545989a25eddd3c77ab6e/tiles/v4/set=4702/EPSG:3857/{z}/{x}/{y}.png',
+  'https://tiles-a.data-cdn.linz.govt.nz/services;key=ac0b45ad4df545989a25eddd3c77ab6e/tiles/v4/set=3670/EPSG:3857/{z}/{x}/{y}.png',
   {
     attribution: '&copy; LINZ Topographic Maps',
     maxZoom: 16
   }
 ).addTo(map);
 
-
-// markers
 L.marker([-41.365,174.94]).addTo(map)
   .bindPopup("Start — Orongorongo River Mouth");
 
@@ -605,7 +601,6 @@ L.marker([-41.34,174.95]).addTo(map)
 
 L.marker([-41.31,174.93]).addTo(map)
   .bindPopup("Finish — Catchpool");
-
 </script>
 
 
