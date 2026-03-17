@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -165,11 +168,17 @@
     color: var(--muted);
     font-style: italic;
   }
-  .map-container {
-    position: relative;
-    height: 480px;
-    overflow: hidden;
-  }
+.map-container {
+  position: relative;
+  height: 520px;
+  overflow: hidden;
+}
+
+#munter-map {
+  width: 100%;
+  height: 100%;
+  filter: contrast(102%) saturate(92%);
+}
   .map-container iframe {
     width: 100%;
     height: 100%;
@@ -467,16 +476,10 @@
       <span class="map-title">Course Map — Rimutaka Forest Park</span>
       <span class="map-coords">41.3700°S / 174.9200°E</span>
     </div>
-    <div class="map-container">
-      <!-- OpenTopoMap via Leaflet, centred on Mukamuka / Orongorongo area -->
-      <iframe
-        src="https://www.openstreetmap.org/export/embed.html?bbox=174.85%2C-41.45%2C175.00%2C-41.30&amp;layer=cyclemap&amp;marker=-41.365%2C174.935"
-        title="Mukamuka Munter course area topo map"
-        loading="lazy"
-        referrerpolicy="no-referrer"
-      ></iframe>
-      <span class="map-overlay-label">Topo — OpenCycleMap</span>
-    </div>
+<div class="map-container">
+  <div id="munter-map"></div>
+  <span class="map-overlay-label">Topo50 — LINZ</span>
+</div>
     <div class="map-legend">
       <div class="map-legend-item"><span class="dot dot-start"></span>Start — Orongorongo River Mouth</div>
       <div class="map-legend-item"><span class="dot dot-high"></span>High Point — South Saddle (~700m)</div>
@@ -575,5 +578,37 @@
   <span>we call it running.</span>
 </footer>
 
+ <script>
+
+const map = L.map('munter-map', {
+  zoomControl: true,
+  scrollWheelZoom: false
+}).setView([-41.365, 174.935], 12);
+
+
+// LINZ Topo50 Raster Tiles
+L.tileLayer(
+  'https://tiles-a.data-cdn.linz.govt.nz/services;key=ac0b45ad4df545989a25eddd3c77ab6e/tiles/v4/set=4702/EPSG:3857/{z}/{x}/{y}.png',
+  {
+    attribution: '&copy; LINZ Topographic Maps',
+    maxZoom: 16
+  }
+).addTo(map);
+
+
+// markers
+L.marker([-41.365,174.94]).addTo(map)
+  .bindPopup("Start — Orongorongo River Mouth");
+
+L.marker([-41.34,174.95]).addTo(map)
+  .bindPopup("South Saddle (~700m)");
+
+L.marker([-41.31,174.93]).addTo(map)
+  .bindPopup("Finish — Catchpool");
+
+</script>
+
+
+ 
 </body>
 </html>
