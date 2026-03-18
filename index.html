@@ -393,7 +393,7 @@
     const miny = b.getSouth() - pad;
     const maxx = b.getEast()  + pad;
     const maxy = b.getNorth() + pad;
-    const url = `https://data.linz.govt.nz/services;key=${LINZ_KEY}/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=layer-50768&outputFormat=application/json&srsName=EPSG:4326&count=5000&bbox=${miny},${minx},${maxy},${maxx},EPSG:4326`;
+    const url = `https://data.linz.govt.nz/services;key=${LINZ_KEY}/wfs?service=WFS&version=2.0.0&request=GetFeature&typeNames=layer-50768&outputFormat=application/json&srsName=EPSG:4326&count=5000&bbox=${minx},${miny},${maxx},${maxy},EPSG:4326`;
     fetch(url)
       .then(r => r.json())
       .then(data => { contourLayer.clearLayers(); contourLayer.addData(data); })
