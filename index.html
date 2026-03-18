@@ -137,7 +137,65 @@ body {
     .since { margin-top: 8px; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--red); text-transform: uppercase; display: inline-block; }
     .enter-link { display: inline-block; margin-top: 24px; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--paper); background: var(--ink); padding: 8px 16px; text-decoration: none; border: 1.5px solid var(--ink); transition: background 0.15s; }
     .enter-link:hover { background: var(--red); border-color: var(--red); }
-    .divider { border: none; border-top: 1.5px solid var(--ink); margin: 40px 0; }
+    /* Remove all dividers */
+.divider { display: none; }
+
+
+/* Red titles, sans-serif, slightly irregular size */
+.section-label {
+  font-family: 'Arial', 'Helvetica', sans-serif;
+  font-weight: bold;
+  color: var(--red);
+  display: inline-block;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  transform: rotate(var(--rand-rotate, 0deg)); /* optional tilt for randomness */
+}
+
+/* Randomised offset for blocks */
+.paper-strip:nth-child(odd) { 
+  transform: translateX(-4%) rotate(-1deg);
+}
+.paper-strip:nth-child(even) { 
+  transform: translateX(3%) rotate(0.5deg);
+}
+
+/* Body text tweaks for "disorganised" look */
+.body-text {
+  font-family: var(--font-body);
+  line-height: 1.7;
+  font-size: 0.875rem;
+}
+
+/* Two blocks fully red with white text (pick manually) */
+.paper-strip.full-red {
+  background-color: var(--red);
+  color: var(--paper);
+}
+.paper-strip.full-red .section-label {
+  color: var(--paper);
+}
+.paper-strip.full-red .body-text,
+.paper-strip.full-red .route-step .desc {
+  color: var(--paper);
+}
+.paper-strip.full-red .route-step .km {
+  color: var(--paper);
+}
+
+/* Slight rotation or scale for some blocks to add chaotic feel */
+.paper-strip:nth-child(3) { transform: translateX(2%) rotate(-0.7deg) scale(1.01); }
+.paper-strip:nth-child(5) { transform: translateX(-3%) rotate(0.5deg) scale(0.99); }
+    
+/* Remove borders from paper strips */
+.paper-strip {
+  border: none;
+  padding: 24px 28px;
+  background: rgba(255,255,255,0.92); /* keep subtle paper effect */
+  position: relative;
+}
     section { margin-bottom: 56px; }
     .section-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); display: inline-block; margin-bottom: 12px; }
     .body-text { font-size: 0.875rem; line-height: 1.8; }
@@ -148,7 +206,6 @@ body {
     .route-step { display: flex; gap: 16px; margin-bottom: 8px; }
     .route-step .km { flex-shrink: 0; width: 56px; font-size: 0.75rem; color: var(--red); padding-top: 2px; }
     .route-step .desc { font-size: 0.85rem; line-height: 1.7; }
-    .paper-strip { background: rgba(255,255,255,0.92); padding: 24px 28px; border: 1px solid rgba(0,0,0,0.06); }
     footer { margin-top: 80px; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; display: inline-block; opacity: 0.5; }
     .leaflet-tooltip { font-family: 'Courier New', monospace; font-size: 10px; background: white; border: 1px solid #ccc; color: #1a5c1a; border-radius: 0; box-shadow: none; padding: 1px 4px; }
   </style>
@@ -174,7 +231,6 @@ body {
 </header>
   </header>
 
-  <hr class="divider" />
 
   <section>
     <div class="paper-strip">
@@ -183,7 +239,6 @@ body {
     </div>
   </section>
 
-  <hr class="divider" />
 
   <section>
     <div class="paper-strip">
@@ -197,8 +252,6 @@ body {
       <div class="route-step"><span class="km">~30 km</span><span class="desc">Finish. Recover. Eat something.</span></div>
     </div>
   </section>
-
-  <hr class="divider" />
 
   <section>
     <div class="paper-strip">
@@ -223,9 +276,20 @@ body {
   </div>
 </section>
 
-  
-  <hr class="divider" />
+  <div class="paper-strip full-red">
+  <div class="section-label">Navigation</div>
+  <div class="body-text" style="margin-bottom: 20px;">
+    Download the official route data for your watch or device. Expect technical ridgelines and creek crossings.
+  </div>
+  <a href="mukamuka-munter.gpx" download="mukamuka-munter.gpx" class="enter-link" style="text-align: center; width: 100%; display: block;">
+    Download GPX Data &darr;
+  </a>
+  <div class="map-status" style="text-align: center; margin-top: 12px;">
+    Verified March 2026 — Remutaka Range
+  </div>
+</div>
 
+  
 <body>
   <div class="grid-overlay"></div>
 
@@ -243,7 +307,6 @@ body {
   </div>
 </body>
 
-  <hr class="divider" />
 
   <footer>Mukamuka Munter &mdash; Since 2007 &mdash; Wreckd.runs.nz</footer>
 
