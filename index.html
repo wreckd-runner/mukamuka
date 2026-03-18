@@ -1,201 +1,301 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mukamuka Munter</title>
-<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mukamuka Munter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
 :root {
-  --red: #cc0000; 
-  --ink: #111; 
-  --paper: #fff;
-  --font-body: 'Courier New', monospace;
+  --red: #cc0000; --ink: #111111; --paper: #ffffff;
+  --font-body: 'Courier New', Courier, monospace;
+  --font-title: 'Special Elite', 'Courier New', Courier, monospace;
 }
 
 body {
-  margin:0;
-  font-family: var(--font-body);
-  background: var(--paper);
-  position: relative;
   min-height: 100vh;
+  background-color: var(--paper);
+  position: relative;
 }
 
-/* Grid overlay */
+/* Grid sits behind everything */
 .grid-overlay {
-  position: fixed; inset: 0;
-  width: 100vw; height: 100vh;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
   pointer-events: none;
-  z-index: 0;
+  z-index: 0; /* Was 5, now behind videos/text */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cline x1='24' y1='20' x2='24' y2='28' stroke='%23cc0000' stroke-width='1.2'/%3E%3Cline x1='20' y1='24' x2='28' y2='24' stroke='%23cc0000' stroke-width='1.2'/%3E%3C/svg%3E");
   background-size: 48px 48px;
 }
 
-.page {
-  position: relative;
-  z-index: 1;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 100px 40px 120px;
-}
-
-/* Logo */
-.logo-wrap {
-  text-align: center;
-  margin-bottom: 32px;
-}
-.logo-mukamuka {
-  font-family: 'Georgia', serif;
-  font-style: italic;
-  font-weight: bold;
-  font-size: clamp(2.4rem,6vw,4rem);
-  color: transparent;
-  -webkit-text-stroke: 2px var(--red);
-  text-stroke: 2px var(--red);
-  display:block;
-}
-.logo-munter {
-  font-family: 'Georgia', serif;
-  font-weight: bold;
-  font-size: clamp(2.4rem,6vw,4rem);
-  color: var(--red);
-  display:block;
-}
-
-/* Meta */
-.meta {
-  text-align:center;
-  font-size:0.85rem;
-  letter-spacing:0.08em;
-  text-transform: uppercase;
-  line-height:1.8;
-  margin-bottom:48px;
-}
-
-/* Paper strips */
-.paper-strip {
-  background: rgba(255,255,255,0.95);
-  padding:32px 36px;
-  margin-bottom:48px;
-  position: relative;
-  left: calc(-3% + 6% * var(--rand,0));
-}
-
-/* Labels */
-.section-label {
-  font-family: 'Arial', sans-serif;
-  font-weight: bold;
-  color: var(--red);
-  font-size:0.85rem;
-  letter-spacing:0.15em;
-  text-transform: uppercase;
-  margin-bottom:16px;
-  display:inline-block;
-}
-
-/* Text */
-.body-text { font-size:0.875rem; line-height:1.7; margin-bottom:16px; }
-
-/* Map */
-#map { width:100%; height:420px; border:1.5px solid var(--ink); margin-top:12px; }
-
-/* Video */
+/* Video wrapper */
 .video-wrap {
   position: relative;
-  width: 100%; aspect-ratio:16/9;
-  border:1.5px solid var(--ink);
-  overflow:hidden;
-  margin-top:16px;
+  z-index: 2; /* Higher than grid */
 }
-.video-wrap iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
+.video-wrap iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  z-index: 3; /* Make sure iframe is above video wrapper background */
+}
 
-/* Link */
-.enter-link {
-  display:inline-block;
-  margin-top:16px;
-  font-size:0.85rem;
-  letter-spacing:0.12em;
+/* 3. The Content (Sits below the grid) */
+.page {
+  position: relative;
+  z-index: 1; /* Keep text below the grid if you want the "printed on" look */
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 80px 32px 120px;
+}
+    }
+#map { 
+  background: #d2d2d2; /* Matches the grey/silver of the old scans */
+  width: 100%; 
+  height: 420px; 
+  border: 1.5px solid var(--ink); 
+  margin-top: 4px; 
+}
+
+    /* Add this to your existing .video-wrap style */
+.video-wrap {
+  z-index: 10;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15); /* Gives it physical height */
+  border: 2px solid var(--ink); /* Slightly thicker to match the "hardware" feel */
+}
+    .page { max-width: 680px; margin: 0 auto; padding: 80px 32px 120px; }
+   /* --- LOGO AND HEADER UPDATE --- */
+    header {
+      margin-bottom: 0; /* Removing margin to manage overlap via logo offset */
+      position: relative;
+    }
+
+/* Logo Container */
+.logo-wrap {
+  position: relative;
+  display: inline-block;
+  transform: translateX(-10%); /* partial overlap */
+  z-index: 5;
+  text-align: center;
+}
+
+/* MUKAMUKA - red outline, italic, justified */
+.logo-mukamuka {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-style: italic;
+  font-weight: bold;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  color: transparent;
+  -webkit-text-stroke: 2px var(--red); /* red outline */
+  text-stroke: 2px var(--red);         /* fallback */
+  display: inline-block;
+  width: 100%;
+  text-align: justify;
+  line-height: 1;
+  margin-bottom: -0.1em;
+}
+
+.logo-mukamuka::after {
+  content: '';
+  display: inline-block;
+  width: 100%; /* forces last line justification */
+}
+
+/* MUNTER - solid red, bold */
+.logo-munter {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-weight: bold;
+  font-style: normal;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  color: var(--red);
+  display: inline-block;
+  line-height: 1;
   text-transform: uppercase;
-  color: var(--paper);
-  background: var(--ink);
-  padding:10px 18px;
-  text-decoration:none;
-  border:1.5px solid var(--ink);
 }
-.enter-link:hover { background: var(--red); border-color: var(--red); }
+    /* Main meta info block within the header strip */
+    .meta {
+      position: relative;
+      padding-top: 80px; /* Leaves space for the overlapping logo */
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 2;
+      display: block;
+    }
+    .meta span { display: block; }
 
-/* Footer */
-footer { margin-top:80px; font-size:0.75rem; letter-spacing:0.12em; text-align:center; text-transform:uppercase; opacity:0.5; }
-
-/* Leaflet tooltip */
-.leaflet-tooltip {
-  font-family: var(--font-body);
-  font-size:10px;
-  background:white;
-  border:1px solid #ccc;
-  color:#1a5c1a;
-  border-radius:0;
-  box-shadow:none;
-  padding:1px 4px;
-}
-</style>
+    /* --- /LOGO AND HEADER UPDATE --- */
+    .meta { margin-top: 20px; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; display: inline-block; line-height: 2; }
+    .meta span { display: block; }
+    .since { margin-top: 8px; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--red); text-transform: uppercase; display: inline-block; }
+    .enter-link { display: inline-block; margin-top: 24px; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--paper); background: var(--ink); padding: 8px 16px; text-decoration: none; border: 1.5px solid var(--ink); transition: background 0.15s; }
+    .enter-link:hover { background: var(--red); border-color: var(--red); }
+    .divider { border: none; border-top: 1.5px solid var(--ink); margin: 40px 0; }
+    section { margin-bottom: 56px; }
+    .section-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); display: inline-block; margin-bottom: 12px; }
+    .body-text { font-size: 0.875rem; line-height: 1.8; }
+    #map { width: 100%; height: 420px; border: 1.5px solid var(--ink); margin-top: 4px; }
+    .map-status { font-size: 11px; letter-spacing: 0.08em; color: #1a5c1a; margin-top: 6px; min-height: 16px; }
+    .video-wrap { position: relative; width: 100%; aspect-ratio: 16/9; border: 1.5px solid var(--ink); overflow: hidden; margin-top: 4px; }
+    .video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+    .route-step { display: flex; gap: 16px; margin-bottom: 8px; }
+    .route-step .km { flex-shrink: 0; width: 56px; font-size: 0.75rem; color: var(--red); padding-top: 2px; }
+    .route-step .desc { font-size: 0.85rem; line-height: 1.7; }
+    .paper-strip { background: rgba(255,255,255,0.92); padding: 24px 28px; border: 1px solid rgba(0,0,0,0.06); }
+    footer { margin-top: 80px; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; display: inline-block; opacity: 0.5; }
+    .leaflet-tooltip { font-family: 'Courier New', monospace; font-size: 10px; background: white; border: 1px solid #ccc; color: #1a5c1a; border-radius: 0; box-shadow: none; padding: 1px 4px; }
+  </style>
 </head>
-
 <body>
-<div class="grid-overlay"></div>
 <div class="page">
 
 <header>
-  <div class="logo-wrap">
+
+      <div class="logo-container">
+ <div class="paper-strip" style="position: relative;">
+    <img src="coast25.jpg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1;">
+   <div class="logo-wrap">
     <span class="logo-mukamuka">MUKAMUKA</span>
     <span class="logo-munter">MUNTER</span>
-    <div class="meta">
-      <span>Classic Wellington Trail Run</span>
-      <span class="since">Since 2007</span>
+  </div>
+  
+  <div class="meta">
+    <span>Classic Wellington Trail Run</span>
+    <span class="since">Since 2007</span>
     </div>
   </div>
 </header>
+  </header>
 
-<section>
-  <div class="paper-strip">
-    <div class="section-label">About the race</div>
-    <p class="body-text">The Mukamuka Munter is a classic Wellington trail run tracing the ridgelines and valleys of the Remutaka Range. Starting from the Hutt Valley floor, climbing sharply into native bush, across exposed tops with views of Kāpiti Coast and Wairarapa. Just trail, no frills.</p>
-  </div>
-</section>
+  <hr class="divider" />
 
-<section>
-  <div class="paper-strip">
-    <div class="section-label">Route map</div>
-    <div id="map"></div>
-  </div>
-</section>
+  <section>
+    <div class="paper-strip">
+      <div class="section-label">About the race</div>
+      <p class="body-text">The Mukamuka Munter is a classic Wellington trail run tracing the ridgelines and valleys of the Remutaka Range. Starting from the Hutt Valley floor, the course climbs sharply into native bush before threading across open tops with views of the Kāpiti Coast and Wairarapa. A proper lung-burner with enough technical terrain to keep things honest. No frills. Just trail.</p>
+    </div>
+  </section>
 
-<section>
+  <hr class="divider" />
+
+  <section>
+    <div class="paper-strip">
+      <div class="section-label">Route guide</div>
+      <div class="route-step"><span class="km">0 km</span><span class="desc">Start — Hutt Valley trailhead. Follow the track markers onto Mukamuka Road.</span></div>
+      <div class="route-step"><span class="km">4 km</span><span class="desc">First major climb begins. 400m of vertical through dense bush. Stay on the main ridge.</span></div>
+      <div class="route-step"><span class="km">10 km</span><span class="desc">Ridgeline traverse. Open tussock and exposed tops — weather can change fast up here.</span></div>
+      <div class="route-step"><span class="km">16 km</span><span class="desc">Descent into the valley crossing. Creek ford — expect wet feet.</span></div>
+      <div class="route-step"><span class="km">22 km</span><span class="desc">Second climb. Shorter but steeper. Use the ropes if provided.</span></div>
+      <div class="route-step"><span class="km">28 km</span><span class="desc">Final descent into the finish. Marshals will guide you in from the road gate.</span></div>
+      <div class="route-step"><span class="km">~30 km</span><span class="desc">Finish. Recover. Eat something.</span></div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <section>
+    <div class="paper-strip">
+      <div class="section-label">Route map</div>
+      <div id="map"></div>
+      <div class="map-status" id="map-status"></div>
+    </div>
+  </section>
+
+  <section>
   <div class="paper-strip">
-    <div class="section-label">Film</div>
-    <div class="video-wrap">
-      <iframe src="https://www.youtube.com/embed/i-7FzfDk9ak" allowfullscreen></iframe>
+    <div class="section-label">Navigation</div>
+    <div class="body-text" style="margin-bottom: 20px;">
+      Download the official route data for your watch or device. Expect technical ridgelines and creek crossings.
+    </div>
+    <a href="mukamuka-munter.gpx" download="mukamuka-munter.gpx" class="enter-link" style="text-align: center; width: 100%; display: block;">
+      Download GPX Data &darr;
+    </a>
+    <div class="map-status" style="text-align: center; margin-top: 12px;">
+      Verified March 2026 — Remutaka Range
     </div>
   </div>
 </section>
 
-<footer>Mukamuka Munter — Since 2007 — Wreckd.runs.nz</footer>
+  
+  <hr class="divider" />
+
+<body>
+  <div class="grid-overlay"></div>
+
+  <div class="page">
+    <header>...</header>
+    ...
+    <section>
+       <div class="paper-strip">
+         <div class="section-label">Film</div>
+         <div class="video-wrap">
+           <iframe src="https://www.youtube.com/embed/i-7FzfDk9ak" ...></iframe>
+         </div>
+       </div>
+    </section>
+  </div>
+</body>
+
+  <hr class="divider" />
+
+  <footer>Mukamuka Munter &mdash; Since 2007 &mdash; Wreckd.runs.nz</footer>
+
 </div>
 
 <script>
 (function() {
-  // Minimal random horizontal offsets
-  document.querySelectorAll('.paper-strip').forEach(el=>{
-    el.style.setProperty('--rand', Math.random());
+  // Your LINZ API Key
+  var KEY = 'ac0b45ad4df545989a25eddd3c77ab6e';
+
+  // Initialize map
+  var map = L.map('map', { 
+    zoomControl: true, 
+    scrollWheelZoom: false 
   });
 
-  // Map
-  var map = L.map('map',{zoomControl:true, scrollWheelZoom:false});
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:20}).addTo(map);
-  map.setView([-41.417,174.935],12);
+  // 1. Aerial Imagery Layer (Historical Pre-1990)
+  // Using the LINZ Basemaps XYZ service for better Leaflet compatibility
+  var aerialLayer = L.tileLayer('https://basemaps.linz.govt.nz/v1/tiles/scanned-aerial-imagery-pre-1990-01-01/WebMercatorQuad/{z}/{x}/{y}.webp?api=' + KEY, {
+    attribution: 'Imagery &copy; <a href="https://www.linz.govt.nz/">LINZ</a>',
+    maxZoom: 20
+  }).addTo(map);
+
+  // 2. Contour Overlay (WMS)
+  // Keep this for the "Munter" topo feel
+  L.tileLayer.wms('https://data.linz.govt.nz/services;key=' + KEY + '/wms', {
+    layers: 'layer-50768',
+    format: 'image/png',
+    transparent: true,
+    version: '1.1.1',
+    opacity: 0.5
+  }).addTo(map);
+
+  var routeCoords = [[-41.41786,174.90081],[-41.41774,174.90107],[-41.41834,174.90236],[-41.41931,174.90434],[-41.42167,174.90595],[-41.42374,174.90744],[-41.42607,174.90908],[-41.42797,174.9097],[-41.43097,174.91109],[-41.43298,174.91279],[-41.43271,174.914],[-41.43399,174.91539],[-41.43453,174.91805],[-41.43403,174.92127],[-41.43303,174.92327],[-41.43222,174.92264],[-41.43065,174.92493],[-41.42857,174.92706],[-41.42716,174.92925],[-41.42514,174.93152],[-41.42384,174.93343],[-41.42239,174.93611],[-41.42083,174.93944],[-41.4197,174.94194],[-41.41905,174.94386],[-41.41757,174.9457],[-41.41588,174.94772],[-41.41436,174.94935],[-41.41395,174.95317],[-41.41286,174.9565],[-41.41182,174.95815],[-41.41141,174.95892],[-41.41095,174.95953],[-41.41081,174.96094],[-41.40988,174.96289],[-41.4091,174.96435],[-41.40805,174.968],[-41.40751,174.96927],[-41.40648,174.97068],[-41.40554,174.97276],[-41.40491,174.97463],[-41.40352,174.97753],[-41.40291,174.97958],[-41.40198,174.98266],[-41.40077,174.98398],[-41.39838,174.98552],[-41.3964,174.98549],[-41.39553,174.98516],[-41.39504,174.98496],[-41.39531,174.98588],[-41.39477,174.98737],[-41.39354,174.98901],[-41.39247,174.9913],[-41.3915,174.99292],[-41.39099,174.99557],[-41.39004,174.99787],[-41.38973,175.00067],[-41.38926,175.00311],[-41.38827,175.00583],[-41.38653,175.00644],[-41.3847,175.00642],[-41.38264,175.00649],[-41.381,175.00676],[-41.37967,175.00541],[-41.37742,175.00453],[-41.37599,175.00509],[-41.37402,175.00523],[-41.3729,175.0044],[-41.3716,175.0041],[-41.36996,175.00325],[-41.36851,175.00283],[-41.36717,175.00196],[-41.36616,175.00218],[-41.36437,175.0021],[-41.36297,175.00175],[-41.36191,175.00197],[-41.36113,175.00237],[-41.36052,175.00224],[-41.35949,175.00168],[-41.35846,175.00155],[-41.35767,175.0012],[-41.35712,175.00057],[-41.35651,175.0002],[-41.35523,174.99986],[-41.35475,175.00027],[-41.35391,175.00036],[-41.35351,174.99955],[-41.35264,174.9995],[-41.35168,174.99947],[-41.35101,174.99901],[-41.35068,174.99877],[-41.34984,174.99929],[-41.34908,174.99964],[-41.34816,174.99995],[-41.34749,175.0001],[-41.34707,174.99994],[-41.34651,175.00005],[-41.34572,174.99991],[-41.34462,174.99976],[-41.3444,175.00115],[-41.3431,175.00278],[-41.34131,175.0029],[-41.33986,175.00303],[-41.33807,175.00402],[-41.3365,175.00389],[-41.33459,175.00462],[-41.33288,175.00548],[-41.3312,175.00663],[-41.32972,175.00878],[-41.32801,175.00814],[-41.32748,175.00662],[-41.32705,175.00514],[-41.32695,175.0043],[-41.32683,175.00395],[-41.32663,175.00199],[-41.32732,175.00064],[-41.32753,175.00007],[-41.32822,174.99892],[-41.3284,174.99825],[-41.3284,174.99791],[-41.32902,174.99701],[-41.3292,174.99654],[-41.32976,174.9956],[-41.33017,174.99457],[-41.33077,174.99361],[-41.33139,174.99268],[-41.33214,174.99136],[-41.33252,174.99023],[-41.33285,174.98937],[-41.33341,174.98903],[-41.3338,174.98784],[-41.33438,174.98767],[-41.33392,174.98723],[-41.33415,174.98657],[-41.33395,174.98501],[-41.33478,174.98431],[-41.33534,174.98318],[-41.33585,174.98201],[-41.33583,174.98102],[-41.33619,174.98016],[-41.33665,174.98013],[-41.33707,174.97952],[-41.33769,174.97965],[-41.33816,174.9799],[-41.33852,174.97945],[-41.33912,174.97867],[-41.33979,174.97841],[-41.34033,174.97782],[-41.34055,174.97739],[-41.34071,174.97711],[-41.34079,174.97642],[-41.34078,174.97578],[-41.34088,174.97572],[-41.3406,174.97492],[-41.34064,174.97408],[-41.34051,174.9734],[-41.34032,174.97276],[-41.34032,174.97194],[-41.34042,174.97129],[-41.34078,174.97049],[-41.34084,174.96941],[-41.34082,174.96834],[-41.34075,174.96746],[-41.3408,174.96648],[-41.34088,174.96567],[-41.34078,174.96489],[-41.34075,174.96367],[-41.34058,174.96236],[-41.34046,174.96143],[-41.34026,174.96054],[-41.34051,174.95961],[-41.34071,174.9588],[-41.34115,174.95803],[-41.34163,174.95653],[-41.3416,174.95464],[-41.34187,174.95321],[-41.34183,174.95085],[-41.34195,174.94989],[-41.34183,174.94926],[-41.34185,174.94785],[-41.3421,174.94752],[-41.3427,174.94675],[-41.34313,174.94546],[-41.34378,174.94519],[-41.34447,174.94426],[-41.34523,174.94357],[-41.34604,174.94353],[-41.34689,174.94241],[-41.34735,174.94194],[-41.34738,174.94091],[-41.34687,174.93941],[-41.34707,174.93935],[-41.34822,174.93854],[-41.3481,174.93742],[-41.3484,174.93686],[-41.34834,174.93617],[-41.34882,174.93508],[-41.34822,174.93436],[-41.34975,174.93282],[-41.34946,174.93178],[-41.34882,174.93032],[-41.34893,174.92927],[-41.34865,174.92794],[-41.34951,174.92677],[-41.35045,174.92493],[-41.3506,174.92372],[-41.35159,174.92233],[-41.35215,174.92165],[-41.35291,174.91963],[-41.35335,174.91782],[-41.35477,174.91588],[-41.35539,174.91426],[-41.35477,174.91306]];
+
+  var routeLine = L.polyline(routeCoords, { color: '#cc0000', weight: 3, opacity: 0.9 }).addTo(map);
+
+  // Markers
+  var dotIcon = L.divIcon({
+    html: '<div style="width:10px;height:10px;background:#cc0000;border:2px solid #fff;border-radius:50%;box-shadow:0 0 0 1px #cc0000"></div>',
+    iconSize:[10,10], iconAnchor:[5,5], className:''
+  });
+  L.marker(routeCoords[0], {icon:dotIcon}).addTo(map).bindPopup('Start');
+  L.marker(routeCoords[routeCoords.length-1], {icon:dotIcon}).addTo(map).bindPopup('Finish');
+
+// Manual override: [Latitude, Longitude], Zoom Level
+  // Zoom levels are typically 0-20. 13 or 14 is usually good for a 30km loop.
+  map.setView([-41.40, 174.96], 12.4);
+
+  document.getElementById('map-status').innerText = 'Historical Aerial Imagery (Pre-1990)';
+
 })();
 </script>
 
