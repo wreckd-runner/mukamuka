@@ -71,8 +71,73 @@ body {
   border: 2px solid var(--ink); /* Slightly thicker to match the "hardware" feel */
 }
     .page { max-width: 680px; margin: 0 auto; padding: 80px 32px 120px; }
-    header { margin-bottom: 64px; }
-    .title { font-family: var(--font-title); font-size: clamp(2.4rem,8vw,4rem); letter-spacing: 0.01em; line-height: 1.1; display: inline-block; }
+   /* --- LOGO AND HEADER UPDATE --- */
+    header {
+      margin-bottom: 0; /* Removing margin to manage overlap via logo offset */
+      position: relative;
+    }
+
+    /* Logo container handles positioning relative to the header */
+    .logo-container {
+      position: absolute;
+      /* OFFCENTER: Shifted to the left */
+      top: -30px; /* Moves up to overlap the background */
+      left: -15px; /* Moves left for the off-center look */
+      z-index: 100; /* Ensures it sits above paper strips and the grid */
+    }
+
+    /* Base logo style using Georgia (standard serif web font) */
+    .mukamuka-logo {
+      font-family: Georgia, Times, 'Times New Roman', serif;
+      text-transform: uppercase;
+      font-size: clamp(2.8rem, 8vw, 4rem);
+      font-weight: bold;
+      line-height: 1.1;
+      display: inline-block;
+    }
+
+    /* Top text: Filled red */
+    .mukamuka-logo .top-text {
+      color: var(--red);
+    }
+
+    /* Bottom text: Replicating the red outline effect */
+    .mukamuka-logo .bottom-text {
+      color: var(--paper); /* Fills with paper color (white) */
+      /* Creates the outline using text-shadow */
+      text-shadow:
+       -1px -1px 0 var(--red),
+        1px -1px 0 var(--red),
+       -1px  1px 0 var(--red),
+        1px  1px 0 var(--red);
+    }
+
+    .since-label {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      color: var(--red);
+      text-transform: uppercase;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      white-space: nowrap;
+      margin-top: 5px;
+    }
+
+    /* Main meta info block within the header strip */
+    .meta {
+      position: relative;
+      padding-top: 80px; /* Leaves space for the overlapping logo */
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 2;
+      display: block;
+    }
+    .meta span { display: block; }
+
+    /* --- /LOGO AND HEADER UPDATE --- */
     .meta { margin-top: 20px; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; display: inline-block; line-height: 2; }
     .meta span { display: block; }
     .since { margin-top: 8px; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--red); text-transform: uppercase; display: inline-block; }
@@ -97,14 +162,21 @@ body {
 <body>
 <div class="page">
 
-  <header>
-    <div class="paper-strip">
-      <h1 class="title">Mukamuka<br>Munter</h1>
+<header>
+    <div class="paper-strip" style="position: relative;">
+
+      <div class="logo-container">
+        <h1 class="mukamuka-logo">
+          <span class="top-text">MUKAMUKA</span><br>
+          <span class="bottom-text">MUNTER</span>
+        </h1>
+        <div class="since-label">Since 2007</div>
+      </div>
       <div class="meta">
         <span>Circa 30km &nbsp;/&nbsp; 900m vert.</span>
         <span>15 Aug 2026</span>
       </div>
-      <div class="since">Since 2007</div><br>
+      <br>
       <a class="enter-link" href="https://wreckd.runs.nz" target="_blank" rel="noopener">Enter &rarr; Wreckd.runs.nz</a>
     </div>
   </header>
