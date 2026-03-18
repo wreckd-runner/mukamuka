@@ -20,7 +20,7 @@ body {
   position: relative;
 }
 
-/* Grid — in front of body text, behind images/video/map/red box */
+/* Grid sits behind everything */
 .grid-overlay {
   position: fixed;
   inset: 0;
@@ -32,6 +32,20 @@ body {
   background-size: 48px 48px;
 }
 
+/* Video wrapper */
+.video-wrap {
+  position: relative;
+  z-index: 2;
+}
+.video-wrap iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  z-index: 3;
+}
+
 .page {
   position: relative;
   z-index: 1;
@@ -40,18 +54,17 @@ body {
   padding: 80px 32px 120px;
 }
 
-/* Map — red border, 16/9 to match video */
 #map { 
   background: #d2d2d2;
-  width: 100%;
-  aspect-ratio: 16/9;
+  width: 100%; 
+  height: 420px; 
   border: 1.5px solid var(--red); 
-  margin-top: 0;
+  margin-top: 4px;
   position: relative;
   z-index: 5;
 }
 
-/* Grid on map grey areas — fixed so it scrolls in sync with page grid */
+/* Grid on map's grey no-data areas — sits below Leaflet's canvas */
 #map::before {
   content: '';
   position: fixed;
@@ -62,23 +75,14 @@ body {
   background-size: 48px 48px;
 }
 
-/* Video — matches map width, red border */
 .video-wrap {
+  z-index: 10;
   position: relative;
-  z-index: 5;
-  width: 100%;
-  aspect-ratio: 16/9;
-  border: 1.5px solid var(--red);
-  overflow: hidden;
-  margin-top: 0;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  border: 2px solid var(--ink);
 }
-.video-wrap iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-}
+
+.page { max-width: 680px; margin: 0 auto; padding: 80px 32px 120px; }
 
 header {
   margin-bottom: 0;
@@ -139,25 +143,8 @@ header {
 .meta { margin-top: 20px; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; display: inline-block; line-height: 2; }
 .meta span { display: block; }
 .since { margin-top: 8px; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--red); text-transform: uppercase; display: inline-block; }
-
-/* Button — full width, red border, matches other elements */
-.enter-link {
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--paper);
-  background: var(--ink);
-  padding: 12px 16px;
-  text-decoration: none;
-  border: 1.5px solid var(--red);
-  text-align: center;
-  transition: background 0.15s;
-}
+.enter-link { display: inline-block; margin-top: 24px; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--paper); background: var(--ink); padding: 8px 16px; text-decoration: none; border: 1.5px solid var(--ink); transition: background 0.15s; }
 .enter-link:hover { background: var(--red); border-color: var(--red); }
-
 section { margin-bottom: 56px; }
 
 .section-label { 
@@ -167,36 +154,20 @@ section { margin-bottom: 56px; }
   letter-spacing: 0.15em; 
   text-transform: uppercase; 
   color: var(--red); 
-  display: block;
+  display: inline-block; 
   margin-bottom: 8px; 
 }
 
 .body-text { font-size: 0.875rem; line-height: 1.8; }
+.map-status { font-size: 11px; letter-spacing: 0.08em; color: #1a5c1a; margin-top: 6px; min-height: 16px; }
+.video-wrap { position: relative; width: 100%; aspect-ratio: 16/9; border: 1.5px solid var(--ink); overflow: hidden; margin-top: 4px; }
+.video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
 .route-step { display: flex; gap: 16px; margin-bottom: 8px; }
 .route-step .km { flex-shrink: 0; width: 56px; font-size: 0.75rem; color: var(--red); padding-top: 2px; }
 .route-step .desc { font-size: 0.85rem; line-height: 1.7; }
 
-/* Text sections */
-.paper-strip { background: transparent; padding: 12px 16px; }
-
-/* Media sections — no side padding so map/video/button align with red box edges */
-.paper-strip--media { background: transparent; padding: 0; }
-.paper-strip--media .section-label { padding: 12px 16px 8px; }
-
-/* Red WRECKd box — grid sits behind it */
-.wreckd-box {
-  background: var(--red);
-  padding: 24px 28px;
-  position: relative;
-  z-index: 2;
-}
-.wreckd-box p {
-  font-family: 'Times New Roman', Times, serif;
-  color: #ffffff;
-  font-size: 0.95rem;
-  line-height: 1.9;
-  margin: 0;
-}
+/* Reduced padding on paper-strip */
+.paper-strip { background: transparent; padding: 12px 16px; border: none rgba(0,0,0,0.06); }
 
 footer { margin-top: 80px; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; display: inline-block; opacity: 0.5; }
 .leaflet-tooltip { font-family: 'Courier New', monospace; font-size: 10px; background: white; border: 1px solid #ccc; color: #1a5c1a; border-radius: 0; box-shadow: none; padding: 1px 4px; }
@@ -208,7 +179,7 @@ footer { margin-top: 80px; font-size: 0.7rem; letter-spacing: 0.12em; text-trans
 
 <header>
   <div class="logo-container">
-    <div class="paper-strip" style="position: relative; z-index: 2;">
+    <div class="paper-strip" style="position: relative;">
       <img src="coast25.jpg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1;">
       <div class="logo-wrap">
         <span class="logo-mukamuka">MUKAMUKA</span>
@@ -243,23 +214,24 @@ footer { margin-top: 80px; font-size: 0.7rem; letter-spacing: 0.12em; text-trans
   </section>
 
   <section>
-    <div class="paper-strip--media">
+    <div class="paper-strip">
       <div class="section-label">Route map</div>
       <div id="map"></div>
+
     </div>
   </section>
 
   <section>
-    <div class="paper-strip--media">
+    <div class="paper-strip">
       <div class="section-label">Navigation</div>
-      <a href="mukamuka-munter.gpx" download="mukamuka-munter.gpx" class="enter-link">
+      <a href="mukamuka-munter.gpx" download="mukamuka-munter.gpx" class="enter-link" style="text-align: center; width: 100%; display: block; margin-top: 0;">
         Download GPX Data &darr;
       </a>
     </div>
   </section>
 
   <section>
-    <div class="paper-strip--media">
+    <div class="paper-strip">
       <div class="section-label">Film</div>
       <div class="video-wrap">
         <iframe src="https://www.youtube.com/embed/i-7FzfDk9ak" allowfullscreen></iframe>
@@ -268,8 +240,8 @@ footer { margin-top: 80px; font-size: 0.7rem; letter-spacing: 0.12em; text-trans
   </section>
 
   <section>
-    <div class="wreckd-box">
-      <p>WRECKd is a Wellington-based trail running collective organising no-frills races in the hills since 2007. We run on public land, leave no trace, and keep entry fees low. All events are self-supported unless stated. Find the full calendar and results at <strong>wreckd.runs.nz</strong>.</p>
+    <div style="background: var(--red); padding: 24px 28px;">
+      <p style="font-family: 'Times New Roman', Times, serif; color: #ffffff; font-size: 0.95rem; line-height: 1.9; margin: 0;">WRECKd is a Wellington-based trail running collective organising no-frills races in the hills since 2007. We run on public land, leave no trace, and keep entry fees low. All events are self-supported unless stated. Find the full calendar and results at <strong>wreckd.runs.nz</strong>.</p>
     </div>
   </section>
 
