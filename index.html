@@ -116,7 +116,7 @@
 
   var map = L.map('map', { zoomControl: true, scrollWheelZoom: false });
 
-fetch('contours.geojson')
+fetch('contour.geojson')
   .then(res => res.json())
   .then(data => {
     L.geoJSON(data, {
