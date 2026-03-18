@@ -77,39 +77,39 @@ body {
       position: relative;
     }
 
-/* Container for the logo */
+/* Logo Container */
 .logo-wrap {
   position: relative;
   display: inline-block;
-  /* Off-center effect */
-  transform: translateX(-10%);
-  margin-bottom: 16px;
-  z-index: 5; /* Overlap any background image */
+  transform: translateX(-10%); /* partial overlap effect */
+  z-index: 5;
 }
 
-/* Mukamuka - italic outline */
+/* Mukamuka - italic outline, all caps */
 .logo-mukamuka {
-  font-family: 'Georgia', 'Times New Roman', serif; /* web-safe serif */
+  font-family: 'Georgia', 'Times New Roman', serif;
   font-style: italic;
   font-weight: bold;
   font-size: clamp(2.4rem, 6vw, 4rem);
   color: transparent;
-  -webkit-text-stroke: 1.5px var(--ink); /* Outline effect */
+  -webkit-text-stroke: 1.5px var(--ink);
   text-stroke: 1.5px var(--ink);
   display: inline-block;
   line-height: 1;
   margin-right: 0.2em;
+  text-transform: uppercase;
 }
 
-/* Munter - regular serif */
+/* Munter - bold, red */
 .logo-munter {
   font-family: 'Georgia', 'Times New Roman', serif;
-  font-weight: normal;
+  font-weight: bold;
   font-style: normal;
   font-size: clamp(2.4rem, 6vw, 4rem);
-  color: var(--ink);
+  color: var(--red);
   display: inline-block;
   line-height: 1;
+  text-transform: uppercase;
 }
 
     /* Main meta info block within the header strip */
@@ -150,17 +150,18 @@ body {
 <div class="page">
 
 <header>
-<div class="logo-wrap">
-  <span class="logo-mukamuka">Mukamuka</span>
-  <span class="logo-munter">Munter</span>
-</div>
-  
+
       <div class="logo-container">
  <div class="paper-strip" style="position: relative;">
     <img src="coast25.jpg" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1;">
-    <div class="logo-wrap" style="position:relative; z-index:5;">
-      <span class="logo-mukamuka">Mukamuka</span>
-      <span class="logo-munter">Munter</span>
+   <div class="logo-wrap">
+    <span class="logo-mukamuka">MUKAMUKA</span>
+    <span class="logo-munter">MUNTER</span>
+  </div>
+  
+  <div class="meta">
+    <span>Classic Wellington Trail Run</span>
+    <span class="since">Since 2007</span>
     </div>
   </div>
 </header>
