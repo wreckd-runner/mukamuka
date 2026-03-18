@@ -158,11 +158,9 @@
   L.marker(routeCoords[0], {icon:dotIcon}).addTo(map).bindPopup('Start');
   L.marker(routeCoords[routeCoords.length-1], {icon:dotIcon}).addTo(map).bindPopup('Finish');
 
-  // Center map on route with tighter padding to "zoom in"
-  map.fitBounds(routeLine.getBounds(), {
-    padding: [10, 10], // Reduced from 40 to 10 for a tighter crop
-    maxZoom: 14        // Prevents it from zooming in TOO far if the route is small
-  });
+// Manual override: [Latitude, Longitude], Zoom Level
+  // Zoom levels are typically 0-20. 13 or 14 is usually good for a 30km loop.
+  map.setView([-41.37, 174.96], 13);
 
   document.getElementById('map-status').innerText = 'Historical Aerial Imagery (Pre-1990)';
 
