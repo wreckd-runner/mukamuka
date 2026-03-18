@@ -83,24 +83,31 @@ body {
   display: inline-block;
   transform: translateX(-10%); /* partial overlap effect */
   z-index: 5;
+  text-align: center;
 }
 
-/* Mukamuka - italic outline, all caps */
+/* MUKAMUKA - italic, red, justified to Munter width */
 .logo-mukamuka {
   font-family: 'Georgia', 'Times New Roman', serif;
   font-style: italic;
   font-weight: bold;
   font-size: clamp(2.4rem, 6vw, 4rem);
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--ink);
-  text-stroke: 1.5px var(--ink);
+  color: var(--red);
   display: inline-block;
+  width: 100%;
+  text-align: justify;
+  position: relative;
   line-height: 1;
-  margin-right: 0.2em;
-  text-transform: uppercase;
+  margin-bottom: -0.1em; /* tighten gap to Munter */
 }
 
-/* Munter - bold, red */
+.logo-mukamuka::after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+
+/* MUNTER - bold, red, same width as MUKAMUKA */
 .logo-munter {
   font-family: 'Georgia', 'Times New Roman', serif;
   font-weight: bold;
