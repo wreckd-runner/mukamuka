@@ -48,13 +48,13 @@ body {
   z-index: 3; /* Make sure iframe is above video wrapper background */
 }
 
-/* 3. The Content (Sits below the grid) */
+/* Reduce the container constraint but keep it centered overall */
 .page {
   position: relative;
-  z-index: 1; /* Keep text below the grid if you want the "printed on" look */
-  max-width: 680px;
+  z-index: 1;
+  max-width: 900px; /* Wider container to allow "random" shifting */
   margin: 0 auto;
-  padding: 80px 32px 120px;
+  padding: 40px 20px;
 }
     }
 #map { 
@@ -157,8 +157,42 @@ body {
     .route-step { display: flex; gap: 16px; margin-bottom: 8px; }
     .route-step .km { flex-shrink: 0; width: 56px; font-size: 0.75rem; color: var(--red); padding-top: 2px; }
     .route-step .desc { font-size: 0.85rem; line-height: 1.7; }
-    .paper-strip { background: rgba(255,255,255,0.92); padding: 24px 28px; border: none rgba(0,0,0,0.06); }
-    footer { margin-top: 80px; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; display: inline-block; opacity: 0.5; }
+/* The "Scrap" look */
+.paper-strip { 
+  background: rgba(255,255,255,0.95); 
+  padding: 20px 25px; 
+  margin-bottom: 20px;
+  width: auto;
+  max-width: 580px; /* Keep the text blocks concise */
+  box-shadow: 2px 2px 0px rgba(0,0,0,0.05); /* Subtle depth */
+  
+  /* Random-ish alignment using nth-child */
+  margin-left: 0; 
+}
+
+/* Shift even sections to the right */
+section:nth-child(even) .paper-strip {
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+/* Shift odd sections slightly off-center */
+section:nth-child(odd) .paper-strip {
+  margin-left: 40px;
+}
+
+/* Specific shift for the map to keep it prominent but off-kilter */
+section:nth-child(4) .paper-strip {
+  max-width: 750px;
+  margin-left: 10px;
+}
+
+/* Tighten the header scrap */
+header .paper-strip {
+  max-width: 650px;
+  margin-left: 0;
+  padding: 30px;
+}    footer { margin-top: 80px; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; display: inline-block; opacity: 0.5; }
     .leaflet-tooltip { font-family: 'Courier New', monospace; font-size: 10px; background: white; border: 1px solid #ccc; color: #1a5c1a; border-radius: 0; box-shadow: none; padding: 1px 4px; }
   </style>
 </head>
@@ -229,28 +263,7 @@ body {
   </div>
 </section>
 
-  
-<body>
-  <div class="grid-overlay"></div>
 
-  <div class="page">
-    <header>...</header>
-    ...
-    <section>
-       <div class="paper-strip">
-         <div class="section-label">Film</div>
-         <div class="video-wrap">
-           <iframe src="https://www.youtube.com/embed/i-7FzfDk9ak" ...></iframe>
-         </div>
-       </div>
-    </section>
-  </div>
-</body>
-
-
-  <footer>Mukamuka Munter &mdash; Since 2007 &mdash; Wreckd.runs.nz</footer>
-
-</div>
 
 <script>
 (function() {
