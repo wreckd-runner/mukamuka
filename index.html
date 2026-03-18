@@ -9,7 +9,9 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
 :root {
-  --red: #cc0000; --ink: #111111; --paper: #ffffff;
+  --red: #cc0000; 
+  --ink: #111111; 
+  --paper: #ffffff;
   --font-body: 'Courier New', Courier, monospace;
   --font-title: 'Special Elite', 'Courier New', Courier, monospace;
 }
@@ -18,24 +20,116 @@ body {
   min-height: 100vh;
   background-color: var(--paper);
   position: relative;
+  margin: 0;
+  font-family: var(--font-body);
 }
 
-/* Grid sits behind everything */
+/* Grid overlay stays behind everything */
 .grid-overlay {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  z-index: 0; /* Was 5, now behind videos/text */
+  z-index: 0;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cline x1='24' y1='20' x2='24' y2='28' stroke='%23cc0000' stroke-width='1.2'/%3E%3Cline x1='20' y1='24' x2='28' y2='24' stroke='%23cc0000' stroke-width='1.2'/%3E%3C/svg%3E");
   background-size: 48px 48px;
+}
+
+/* Main page wrapper */
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 900px; /* wider content for less scrolling */
+  margin: 0 auto;
+  padding: 100px 40px 120px;
+}
+
+/* Header/logo */
+.logo-wrap {
+  display: inline-block;
+  text-align: center;
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+.logo-mukamuka {
+  font-family: 'Georgia', serif;
+  font-style: italic;
+  font-weight: bold;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  color: transparent;
+  -webkit-text-stroke: 2px var(--red);
+  text-stroke: 2px var(--red);
+  display: block;
+  text-align: center;
+}
+
+.logo-munter {
+  font-family: 'Georgia', serif;
+  font-weight: bold;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  color: var(--red);
+  text-align: center;
+  display: block;
+}
+
+/* Meta info under logo */
+.meta {
+  text-align: center;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.8;
+  margin-bottom: 48px;
+}
+
+/* Paper strips — random offsets, no rotation */
+.paper-strip {
+  border: none;
+  background: rgba(255,255,255,0.95);
+  padding: 32px 36px;
+  margin-bottom: 48px;
+  position: relative;
+  left: calc(-3% + 6% * var(--rand)); /* subtle random horizontal offset */
+}
+
+/* Section labels */
+.section-label {
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  color: var(--red);
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: inline-block;
+}
+
+/* Body text */
+.body-text {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+/* Route map */
+#map { 
+  width: 100%; 
+  height: 420px; 
+  border: 1.5px solid var(--ink); 
+  margin-top: 12px; 
 }
 
 /* Video wrapper */
 .video-wrap {
   position: relative;
-  z-index: 2; /* Higher than grid */
+  width: 100%;
+  aspect-ratio: 16/9;
+  border: 1.5px solid var(--ink);
+  overflow: hidden;
+  margin-top: 16px;
+  z-index: 5;
 }
 .video-wrap iframe {
   position: absolute;
@@ -43,176 +137,49 @@ body {
   width: 100%;
   height: 100%;
   border: none;
-  z-index: 3; /* Make sure iframe is above video wrapper background */
 }
 
-/* 3. The Content (Sits below the grid) */
-.page {
-  position: relative;
-  z-index: 1; /* Keep text below the grid if you want the "printed on" look */
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 80px 32px 120px;
-}
-    }
-#map { 
-  background: #d2d2d2; /* Matches the grey/silver of the old scans */
-  width: 100%; 
-  height: 420px; 
-  border: 1.5px solid var(--ink); 
-  margin-top: 4px; 
-}
-
-    /* Add this to your existing .video-wrap style */
-.video-wrap {
-  z-index: 10;
-  position: relative;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15); /* Gives it physical height */
-  border: 2px solid var(--ink); /* Slightly thicker to match the "hardware" feel */
-}
-    .page { max-width: 680px; margin: 0 auto; padding: 80px 32px 120px; }
-   /* --- LOGO AND HEADER UPDATE --- */
-    header {
-      margin-bottom: 0; /* Removing margin to manage overlap via logo offset */
-      position: relative;
-    }
-
-/* Logo Container */
-.logo-wrap {
-  position: relative;
+/* Links/buttons */
+.enter-link {
   display: inline-block;
-  transform: translateX(-10%); /* partial overlap */
-  z-index: 5;
-  text-align: center;
-}
-
-/* MUKAMUKA - red outline, italic, justified */
-.logo-mukamuka {
-  font-family: 'Georgia', 'Times New Roman', serif;
-  font-style: italic;
-  font-weight: bold;
-  font-size: clamp(2.4rem, 6vw, 4rem);
-  color: transparent;
-  -webkit-text-stroke: 2px var(--red); /* red outline */
-  text-stroke: 2px var(--red);         /* fallback */
-  display: inline-block;
-  width: 100%;
-  text-align: justify;
-  line-height: 1;
-  margin-bottom: -0.1em;
-}
-
-.logo-mukamuka::after {
-  content: '';
-  display: inline-block;
-  width: 100%; /* forces last line justification */
-}
-
-/* MUNTER - solid red, bold */
-.logo-munter {
-  font-family: 'Georgia', 'Times New Roman', serif;
-  font-weight: bold;
-  font-style: normal;
-  font-size: clamp(2.4rem, 6vw, 4rem);
-  color: var(--red);
-  display: inline-block;
-  line-height: 1;
-  text-transform: uppercase;
-}
-    /* Main meta info block within the header strip */
-    .meta {
-      position: relative;
-      padding-top: 80px; /* Leaves space for the overlapping logo */
-      font-size: 0.85rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      line-height: 2;
-      display: block;
-    }
-    .meta span { display: block; }
-
-    /* --- /LOGO AND HEADER UPDATE --- */
-    .meta { margin-top: 20px; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; display: inline-block; line-height: 2; }
-    .meta span { display: block; }
-    .since { margin-top: 8px; font-size: 0.75rem; letter-spacing: 0.15em; color: var(--red); text-transform: uppercase; display: inline-block; }
-    .enter-link { display: inline-block; margin-top: 24px; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--paper); background: var(--ink); padding: 8px 16px; text-decoration: none; border: 1.5px solid var(--ink); transition: background 0.15s; }
-    .enter-link:hover { background: var(--red); border-color: var(--red); }
-    /* Remove all dividers */
-.divider { display: none; }
-
-
-/* Red titles, sans-serif, slightly irregular size */
-.section-label {
-  font-family: 'Arial', 'Helvetica', sans-serif;
-  font-weight: bold;
-  color: var(--red);
-  display: inline-block;
+  margin-top: 16px;
   font-size: 0.85rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin-bottom: 12px;
-  transform: rotate(var(--rand-rotate, 0deg)); /* optional tilt for randomness */
-}
-
-/* Randomised offset for blocks */
-.paper-strip:nth-child(odd) { 
-  transform: translateX(-4%) rotate(-1deg);
-}
-.paper-strip:nth-child(even) { 
-  transform: translateX(3%) rotate(0.5deg);
-}
-
-/* Body text tweaks for "disorganised" look */
-.body-text {
-  font-family: var(--font-body);
-  line-height: 1.7;
-  font-size: 0.875rem;
-}
-
-/* Two blocks fully red with white text (pick manually) */
-.paper-strip.full-red {
-  background-color: var(--red);
   color: var(--paper);
+  background: var(--ink);
+  padding: 10px 18px;
+  text-decoration: none;
+  border: 1.5px solid var(--ink);
+  transition: background 0.15s;
 }
-.paper-strip.full-red .section-label {
-  color: var(--paper);
-}
-.paper-strip.full-red .body-text,
-.paper-strip.full-red .route-step .desc {
-  color: var(--paper);
-}
-.paper-strip.full-red .route-step .km {
-  color: var(--paper);
+.enter-link:hover {
+  background: var(--red);
+  border-color: var(--red);
 }
 
-/* Slight rotation or scale for some blocks to add chaotic feel */
-.paper-strip:nth-child(3) { transform: translateX(2%) rotate(-0.7deg) scale(1.01); }
-.paper-strip:nth-child(5) { transform: translateX(-3%) rotate(0.5deg) scale(0.99); }
-    
-/* Remove borders from paper strips */
-.paper-strip {
-  border: none;
-  padding: 24px 28px;
-  background: rgba(255,255,255,0.92); /* keep subtle paper effect */
-  position: relative;
+/* Footer */
+footer {
+  margin-top: 80px;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: block;
+  text-align: center;
+  opacity: 0.5;
 }
-    section { margin-bottom: 56px; }
-    .section-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); display: inline-block; margin-bottom: 12px; }
-    .body-text { font-size: 0.875rem; line-height: 1.8; }
-    #map { width: 100%; height: 420px; border: 1.5px solid var(--ink); margin-top: 4px; }
-    .map-status { font-size: 11px; letter-spacing: 0.08em; color: #1a5c1a; margin-top: 6px; min-height: 16px; }
-    .video-wrap { position: relative; width: 100%; aspect-ratio: 16/9; border: 1.5px solid var(--ink); overflow: hidden; margin-top: 4px; }
-    .video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
-    .route-step { display: flex; gap: 16px; margin-bottom: 8px; }
-    .route-step .km { flex-shrink: 0; width: 56px; font-size: 0.75rem; color: var(--red); padding-top: 2px; }
-    .route-step .desc { font-size: 0.85rem; line-height: 1.7; }
-    footer { margin-top: 80px; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; display: inline-block; opacity: 0.5; }
-    .leaflet-tooltip { font-family: 'Courier New', monospace; font-size: 10px; background: white; border: 1px solid #ccc; color: #1a5c1a; border-radius: 0; box-shadow: none; padding: 1px 4px; }
-  </style>
-</head>
-<body>
-<div class="page">
 
+/* Leaflet tooltip */
+.leaflet-tooltip {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  background: white;
+  border: 1px solid #ccc;
+  color: #1a5c1a;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 1px 4px;
+}
 <header>
 
       <div class="logo-container">
