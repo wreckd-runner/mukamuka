@@ -51,7 +51,6 @@ section {
   background: white; 
   padding: 15px;
   display: inline-block;
-  /* Borders removed as requested */
 }
 
 /* LAYER 20: THE HEAVY OBJECTS (In front of the grid) */
@@ -74,7 +73,6 @@ header {
   background: transparent; 
   position: relative;
   z-index: 20; 
-  /* No border */
 }
 
 .wreckd-box {
@@ -83,7 +81,6 @@ header {
   color: white;
   padding: 30px;
   z-index: 20; 
-  /* Shadow removed */
 }
 
 .enter-link { 
@@ -96,15 +93,14 @@ header {
   font-size: 0.85rem; 
   text-transform: uppercase;
   position: relative; 
-  z-index: 20; /* Sits in front of grid */
+  z-index: 20; /* Now definitively above the grid */
 }
 
-/* LAYER 25: THE LOGO (Overlapping the hero image by 50px) */
+/* LAYER 25: THE LOGO (Overlapping the hero image, shifted up/left) */
 .logo-wrap {
   position: absolute;
-  top: 250px; /* Overlapping the 300px header by 50px */
-  left: -20px;
-  transform: rotate(-2deg);
+  top: 230px; /* Moved up from 250px */
+  left: -40px; /* Moved further left from -20px */
   z-index: 25; 
   pointer-events: none;
 }
