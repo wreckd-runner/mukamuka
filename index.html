@@ -20,7 +20,7 @@ body {
   font-family: var(--font-body);
 }
 
-/* LAYER 10: THE GRID (Spray-painted over the desk) */
+/* LAYER 10: THE GRID */
 .grid-overlay {
   position: fixed;
   inset: 0;
@@ -37,7 +37,7 @@ body {
   padding: 40px 32px 120px;
 }
 
-/* LAYER 5: THE NOTES (Stuck to the desk, behind the grid) */
+/* LAYER 5: THE NOTES */
 section { 
   margin-bottom: 60px; 
   position: relative;
@@ -53,7 +53,31 @@ section {
   display: inline-block;
 }
 
-/* LAYER 20: THE HEAVY OBJECTS (Sitting on top of the grid) */
+/* New Flex Row for Date + Tag */
+.date-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.tag-link {
+  display: inline-block;
+  background: var(--red);
+  color: white;
+  padding: 4px 8px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: transform 0.1s ease;
+}
+
+.tag-link:hover {
+  transform: scale(1.05);
+}
+
+/* LAYER 20: THE HEAVY OBJECTS */
 header {
   margin-bottom: 100px;
   position: relative;
@@ -75,7 +99,6 @@ header {
   z-index: 20; 
 }
 
-/* Moved this section to z-index 20 to match the wreckd-box */
 .gpx-section {
   position: relative;
   z-index: 20;
@@ -101,7 +124,7 @@ header {
   text-transform: uppercase;
 }
 
-/* LAYER 25: THE LOGO (Overlapping top element) */
+/* LAYER 25: THE LOGO */
 .logo-wrap {
   position: absolute;
   top: 230px; 
@@ -145,12 +168,15 @@ header {
   </header>
 
   <section>
-    <span class="section-label">Wellinton's Best Micro Adventure</span>
+    <span class="section-label">Wellington's Best Micro Adventure</span>
     <p class="body-text">The Mukamuka Munter is a classic Wellington trail run tracing the ridgelines and valleys of the Remutaka Range. No frills. Just trail.</p>
   </section>
   
- <section>
-    <span class="section-label">August 15th 2026</span>
+  <section>
+    <div class="date-row">
+      <span class="section-label" style="margin-bottom:0;">August 15th 2026</span>
+      <a href="https://wreckd.runs.nz" class="tag-link">A WRECKd Event</a>
+    </div>
   </section>
   
   <section>
