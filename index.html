@@ -18,10 +18,9 @@ body {
   background-color: var(--paper);
   margin: 0;
   font-family: var(--font-body);
-  position: relative;
 }
 
-/* GRID - Order: 10 */
+/* LAYER 10: THE GRID (Painted over the desk/notes) */
 .grid-overlay {
   position: fixed;
   inset: 0;
@@ -31,45 +30,74 @@ body {
   background-size: 48px 48px;
 }
 
-/* PAGE WRAPPER - Order: 15 */
 .page {
   position: relative;
-  z-index: 15; 
   max-width: 680px;
   margin: 0 auto;
   padding: 40px 32px 120px;
 }
 
-/* BODY TEXT / SECTION - Order: 5 (Behind Grid) */
+/* LAYER 5: THE NOTES (Stuck to the desk, behind the grid) */
 section { 
   margin-bottom: 60px; 
   position: relative;
   z-index: 5; 
 }
 
-/* HEADER AREA */
+.body-text { 
+  font-size: 0.9rem; 
+  line-height: 1.7; 
+  color: var(--ink); 
+  background: white; 
+  padding: 15px;
+  display: inline-block; /* Makes it feel like a scrap of paper */
+  border: 1px solid #ddd;
+}
+
+/* LAYER 20: THE HEAVY OBJECTS (In front of the grid) */
 header {
   margin-bottom: 100px;
   position: relative;
   height: 300px;
-  border: 1.5px solid var(--ink);
+  border: 2px solid var(--ink);
+  z-index: 20; 
 }
 
-/* HERO IMAGE - Order: 20 */
 .header-bg {
-  position: absolute;
-  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: 20;
 }
 
-/* LOGO - Order: 25 */
+#map { 
+  width: 100%; 
+  height: 420px; 
+  border: 2px solid var(--red); 
+  background: transparent; /* Shows grid if tiles are missing */
+  position: relative;
+  z-index: 20; 
+}
+
+.wreckd-box {
+  position: relative;
+  background: var(--red);
+  color: white;
+  padding: 30px;
+  box-shadow: 12px 12px 0 var(--ink);
+  z-index: 20; 
+}
+
+.enter-link { 
+  display: block; text-align: center; background: var(--ink); color: white; 
+  padding: 20px; text-decoration: none; font-size: 0.85rem; text-transform: uppercase;
+  position: relative; z-index: 20;
+}
+
+/* LAYER 25: THE LOGO (The final sticker) */
 .logo-wrap {
   position: absolute;
   top: 40%;
-  left: -20px;
+  left: -30px;
   transform: rotate(-3deg);
   background: var(--paper);
   padding: 15px 25px;
@@ -92,37 +120,10 @@ header {
   text-transform: uppercase; display: block;
 }
 
-/* IFRAME / MAP - Order: 20 */
-#map { 
-  width: 100%; 
-  height: 420px; 
-  border: 1.5px solid var(--red); 
-  background: white;
-  position: relative;
-  z-index: 20; 
-}
-
-/* RED BOX - Order: 20 */
-.wreckd-box {
-  position: relative;
-  background: var(--red);
-  color: white;
-  padding: 30px;
-  box-shadow: 12px 12px 0 var(--ink);
-  z-index: 20; 
-}
-
-/* OTHER UI */
 .section-label { 
   font-family: sans-serif; font-size: 0.75rem; font-weight: 900;
   letter-spacing: 0.15em; text-transform: uppercase; color: var(--red); 
-  margin-bottom: 15px; display: block;
-}
-.body-text { font-size: 0.9rem; line-height: 1.7; color: var(--ink); background: white; padding: 10px; }
-.enter-link { 
-  display: block; text-align: center; background: var(--ink); color: white; 
-  padding: 20px; text-decoration: none; font-size: 0.85rem; text-transform: uppercase;
-  position: relative; z-index: 20;
+  margin-bottom: 10px; display: block;
 }
 </style>
 </head>
@@ -163,6 +164,7 @@ header {
   var map = L.map('map', { zoomControl: true, scrollWheelZoom: false });
   var KEY = 'ac0b45ad4df545989a25eddd3c77ab6e';
 
+  // Tile layer
   L.tileLayer('https://basemaps.linz.govt.nz/v1/tiles/scanned-aerial-imagery-pre-1990-01-01/WebMercatorQuad/{z}/{x}/{y}.webp?api=' + KEY, {
     attribution: 'Imagery &copy; LINZ',
     maxZoom: 20
