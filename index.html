@@ -20,6 +20,7 @@ body {
   font-family: var(--font-body);
 }
 
+/* LAYER 10: THE GRID */
 .grid-overlay {
   position: fixed;
   inset: 0;
@@ -36,41 +37,13 @@ body {
   padding: 40px 32px 120px;
 }
 
+/* LAYER 5: THE NOTES */
 section { 
   margin-bottom: 60px; 
   position: relative;
   z-index: 5; 
 }
 
-.body-text { 
-  font-size: 0.9rem; 
-  line-height: 1.7; 
-  color: var(--ink); 
-  background: white; 
-  padding: 15px;
-  display: inline-block;
-}
-
-.date-row {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-.tag-link {
-  display: inline-block;
-  background: var(--red);
-  color: white;
-  padding: 4px 8px;
-  text-decoration: none;
-  font-size: 0.8rem;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-<style>
 /* Updated Route Table Styling */
 .route-table {
   width: 100%;
@@ -106,8 +79,41 @@ section {
 .route-table td:last-child {
   padding-left: 20px;
 }
-</style>
+  
+.body-text { 
+  font-size: 0.9rem; 
+  line-height: 1.7; 
+  color: var(--ink); 
+  background: white; 
+  padding: 15px;
+  display: inline-block;
+}
 
+/* New Flex Row for Date + Tag */
+.date-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.tag-link {
+  display: inline-block;
+  background: var(--red);
+  color: white;
+  padding: 4px 8px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: transform 0.1s ease;
+}
+
+.tag-link:hover {
+  transform: scale(1.05);
+}
+
+/* LAYER 20: THE HEAVY OBJECTS */
 header {
   margin-bottom: 100px;
   position: relative;
@@ -124,6 +130,7 @@ header {
 #map { 
   width: 100%; 
   height: 420px; 
+  background: transparent; 
   position: relative;
   z-index: 20; 
 }
@@ -153,6 +160,7 @@ header {
   text-transform: uppercase;
 }
 
+/* LAYER 25: THE LOGO */
 .logo-wrap {
   position: absolute;
   top: 230px; 
@@ -197,7 +205,19 @@ header {
 
   <section>
     <span class="section-label">Wellington's Best Micro Adventure</span>
-    <p class="body-text">The Mukamuka Munter is a classic Wellington trail run tracing the ridgelines and valleys of the Remutaka Range. No frills. Just trail.</p>
+    <p class="body-text">
+      
+      The Mukamuka Munter is a classic Wellington trail race. Established 2007, as a wilderness run about the remote and rugged south coast.
+      The Mukamuka Munter is a staple on the calendar, with course records from Daniel Jones, back-to-back titles from Deborah Lynch and veteran apperances by Pete McFarlane (70+)
+      The course requires respect for its technical difficulty and isolation. 
+    
+    </p>
+<p class="body-text">
+
+  The Mukamuka Munter is "full-on grassroots wilderness event". The inaugral race fixture of the <a href="wreckd.runs.nz">the Wilderness Running and Endurance Collective Inc.</a>
+
+   </p>
+    
   </section>
   
   <section>
@@ -205,27 +225,30 @@ header {
       <span class="section-label" style="margin-bottom:0;">August 15th 2026</span>
       <a href="https://wreckd.runs.nz" class="tag-link">A WRECKd Event</a>
     </div>
-
-    <span class="section-label">Route Description</span>
-    <table class="route-table">
-      <tr>
-        <td class="label-cell">Coast</td>
-        <td>Starting the Orongorongo River mouth, follows the Wild Coast Trail about Turikirae Head, and east toward the Mukamuka-iti and Mukamuka Stream. Hard packed 4x4 trail becomes sandy tracks, that makes for fast running.</td>
-      </tr>
-      <tr>
-        <td class="label-cell">Valley</td>
-        <td>The Mukamuka Valley is a broad river valley that becomes progressively more rugged and technical as it approaches the South Saddle. Technical river running is an important skill in this section, as is navigation, as you feel a world away from where you started or where you'll finish.</td>
-      </tr>
-      <tr>
-        <td class="label-cell">Bush</td>
-        <td>As you enter the Remutaka Forest park, and untouched native forest. You reach the South Saddle with sweeping views of the coast and Wellington region. You might not stick about long, its often windy! Drop down a steep rooted track to the Matthews Stream and the major river crossing - The Orongorongo.</td>
-      </tr>
-      <tr>
-        <td class="label-cell">Catchpool</td>
-        <td>A fast run along the big bend track, you'll past walkers out for a picnic, as you enter familiar territory on the Orongorongo River track to the finish.</td>
-      </tr>
-    </table>
   </section>
+
+  
+<span class="section-label">The Course</span>
+  <table class="route-table">
+    <tr>
+      <td>Coast</td>
+      <td>Starting the Orongorongo River mouth, follows the Wild Coast Trail about Turikirae Head, and east toward the Mukamuka-iti and Mukamuka Stream. Hard packed 4x4 trail becomes sandy tracks, that makes for fast running.</td>
+    </tr>
+    <tr>
+      <td>Valley</td>
+      <td>The Mukamuka Valley is a broad river valley that becomes progressively more rugged and technical as it approaches the South Saddle. Technical river running is an important skill in this section, as is navigation, as you feel a world away from where you started or where you'll finish.</td>
+    </tr>
+    <tr>
+      <td>Bush</td>
+      <td>As you enter the Remutaka Forest park, and untouched native forest. You reach the South Saddle with sweeping views of the coast and Wellington region. You might not stick about long, its often windy! Drop down a steep rooted track to the Matthews Stream and the major river crossing - The Orongorongo.</td>
+    </tr>
+    <tr>
+      <td>Catchpool</td>
+      <td>A fast run along the big bend track, you'll past walkers out for a picnic, as you enter familiar territory on the Orongorongo River track to the finish.</td>
+    </tr>
+  </table>
+</section>
+
   
   <section>
     <span class="section-label">Course Map</span>
