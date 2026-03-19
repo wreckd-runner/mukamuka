@@ -195,6 +195,19 @@ header {
   margin-bottom: 60px;
 }
 
+.video-section {
+  position: relative;
+  z-index: 20;
+  margin-bottom: 60px;
+}
+
+.video-section iframe {
+  display: block;
+  width: 100%;
+  height: 420px;
+  border: none;
+}
+
 .wreckd-box {
   position: relative;
   background: var(--red);
@@ -315,6 +328,14 @@ footer {
 
   <section class="gpx-section">
     <a href="https://wreckd.runs.nz/join" class="register-button">Join Us and Register</a>
+  </section>
+
+  <section class="video-section">
+    <iframe
+      src="https://www.youtube.com/embed/i-7FzfDk9ak"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
   </section>
 
   <div class="wreckd-box">
