@@ -20,7 +20,7 @@ body {
   font-family: var(--font-body);
 }
 
-/* LAYER 10: THE GRID (Painted over the desk/notes) */
+/* LAYER 10: THE GRID (Spray-painted over the desk) */
 .grid-overlay {
   position: fixed;
   inset: 0;
@@ -50,8 +50,8 @@ section {
   color: var(--ink); 
   background: white; 
   padding: 15px;
-  display: inline-block; /* Makes it feel like a scrap of paper */
-  border: 1px solid #ddd;
+  display: inline-block;
+  /* Borders removed as requested */
 }
 
 /* LAYER 20: THE HEAVY OBJECTS (In front of the grid) */
@@ -59,7 +59,6 @@ header {
   margin-bottom: 100px;
   position: relative;
   height: 300px;
-  border: 2px solid var(--ink);
   z-index: 20; 
 }
 
@@ -72,10 +71,10 @@ header {
 #map { 
   width: 100%; 
   height: 420px; 
-  border: 2px solid var(--red); 
-  background: transparent; /* Shows grid if tiles are missing */
+  background: transparent; 
   position: relative;
   z-index: 20; 
+  /* No border */
 }
 
 .wreckd-box {
@@ -83,27 +82,31 @@ header {
   background: var(--red);
   color: white;
   padding: 30px;
-  box-shadow: 12px 12px 0 var(--ink);
   z-index: 20; 
+  /* Shadow removed */
 }
 
 .enter-link { 
-  display: block; text-align: center; background: var(--ink); color: white; 
-  padding: 20px; text-decoration: none; font-size: 0.85rem; text-transform: uppercase;
-  position: relative; z-index: 20;
+  display: block; 
+  text-align: center; 
+  background: var(--ink); 
+  color: white; 
+  padding: 20px; 
+  text-decoration: none; 
+  font-size: 0.85rem; 
+  text-transform: uppercase;
+  position: relative; 
+  z-index: 20; /* Sits in front of grid */
 }
 
-/* LAYER 25: THE LOGO (The final sticker) */
+/* LAYER 25: THE LOGO (Overlapping the hero image by 50px) */
 .logo-wrap {
   position: absolute;
-  top: 40%;
-  left: -30px;
-  transform: rotate(-3deg);
-  background: var(--paper);
-  padding: 15px 25px;
-  border: 2px solid var(--ink);
-  box-shadow: 10px 10px 0 var(--red);
+  top: 250px; /* Overlapping the 300px header by 50px */
+  left: -20px;
+  transform: rotate(-2deg);
   z-index: 25; 
+  pointer-events: none;
 }
 
 .logo-mukamuka {
@@ -164,7 +167,6 @@ header {
   var map = L.map('map', { zoomControl: true, scrollWheelZoom: false });
   var KEY = 'ac0b45ad4df545989a25eddd3c77ab6e';
 
-  // Tile layer
   L.tileLayer('https://basemaps.linz.govt.nz/v1/tiles/scanned-aerial-imagery-pre-1990-01-01/WebMercatorQuad/{z}/{x}/{y}.webp?api=' + KEY, {
     attribution: 'Imagery &copy; LINZ',
     maxZoom: 20
