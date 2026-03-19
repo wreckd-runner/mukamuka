@@ -53,7 +53,7 @@ section {
   display: inline-block;
 }
 
-/* LAYER 20: THE HEAVY OBJECTS (In front of the grid) */
+/* LAYER 20: THE HEAVY OBJECTS (Sitting on top of the grid) */
 header {
   margin-bottom: 100px;
   position: relative;
@@ -75,6 +75,13 @@ header {
   z-index: 20; 
 }
 
+/* Moved this section to z-index 20 to match the wreckd-box */
+.gpx-section {
+  position: relative;
+  z-index: 20;
+  margin-bottom: 60px;
+}
+
 .wreckd-box {
   position: relative;
   background: var(--red);
@@ -92,15 +99,13 @@ header {
   text-decoration: none; 
   font-size: 0.85rem; 
   text-transform: uppercase;
-  position: relative; 
-  z-index: 20; /* Now definitively above the grid */
 }
 
-/* LAYER 25: THE LOGO (Overlapping the hero image, shifted up/left) */
+/* LAYER 25: THE LOGO (Overlapping top element) */
 .logo-wrap {
   position: absolute;
-  top: 230px; /* Moved up from 250px */
-  left: -40px; /* Moved further left from -20px */
+  top: 230px; 
+  left: -40px; 
   z-index: 25; 
   pointer-events: none;
 }
@@ -149,7 +154,7 @@ header {
     <div id="map"></div>
   </section>
 
-  <section>
+  <section class="gpx-section">
     <a href="#" class="enter-link">Download GPX Data ↓</a>
   </section>
 
