@@ -25,9 +25,16 @@ body {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 10; 
+  z-index: 10;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cline x1='24' y1='20' x2='24' y2='28' stroke='%23cc0000' stroke-width='0.4'/%3E%3Cline x1='20' y1='24' x2='28' y2='24' stroke='%23cc0000' stroke-width='0.4'/%3E%3C/svg%3E");
   background-size: 96px 96px;
+  opacity: 0;
+  transition: opacity 0.6s ease-out;
+}
+
+.grid-overlay.scrolling {
+  opacity: 1;
+  transition: opacity 0.1s ease-in;
 }
 
 .page {
@@ -281,12 +288,12 @@ footer {
   <section>
     <span class="section-label">Wellington's Best Micro Adventure</span>
     <p class="body-text">
-      The Mukamuka Munter is a classic trail race. Inspired by the legendary Wellington Trampers' Marathon and established 2007, this is an epic wilderness run about the remote and rugged south coast.
-      The Mukamuka Munter is a staple on the calendar, with course records from Daniel Jones, back-to-back titles from Deborah Lynch and veteran apperances by Pete McFarlane.
+      The Mukamuka Munter is a classic Wellington trail race. Established 2007, as a wilderness run about the remote and rugged south coast.
+      The Mukamuka Munter is a staple on the calendar, with course records from Daniel Jones, back-to-back titles from Deborah Lynch and veteran apperances by Pete McFarlane (70+)
       The course requires respect for its technical difficulty and isolation. 
     </p>
     <p class="body-text">
-      The Mukamuka Munter is a "full-on grassroots wilderness event" and the inaugral race fixture of the <a href="https://wreckd.runs.nz" style="color: var(--red);">the Wilderness Running and Endurance Collective Inc.</a>
+      The Mukamuka Munter is "full-on grassroots wilderness event". The inaugral race fixture of the <a href="https://wreckd.runs.nz" style="color: var(--red);">the Wilderness Running and Endurance Collective Inc.</a>
     </p>
   </section>
   
@@ -302,19 +309,19 @@ footer {
     <table class="route-table">
       <tr>
         <td>Coast</td>
-        <td>Starting at the Orongorongo River mouth, the route follows the Wild Coast Trail around Turikirae Head, and east toward the Mukamuka-iti and Mukamuka Stream. Hard packed 4x4 trail becomes sandy tracks together making for a fast start.</td>
+        <td>Starting the Orongorongo River mouth, follows the Wild Coast Trail about Turikirae Head, and east toward the Mukamuka-iti and Mukamuka Stream. Hard packed 4x4 trail becomes sandy tracks, that makes for fast running.</td>
       </tr>
       <tr>
         <td>Valley</td>
-        <td>The Mukamuka Valley is a open river valley with various tributaries to avoid. It becomes progressively more rugged and technical as it approaches the South Saddle. Rocky river running is an important skill in this section, as is navigation. You feel a world away from where you started and where you'll finish.</td>
+        <td>The Mukamuka Valley is a broad river valley that becomes progressively more rugged and technical as it approaches the South Saddle. Technical river running is an important skill in this section, as is navigation, as you feel a world away from where you started or where you'll finish.</td>
       </tr>
       <tr>
         <td>Bush</td>
-        <td>As you enter the untouched Remutaka Forest park. You reach the South Saddle with sweeping views of the coast and Wellington region. You might not stick about long, its often very windy! Drop down a steep rooted track to the Matthews Stream and the major river crossing - The Orongorongo.</td>
+        <td>As you enter the Remutaka Forest park, and untouched native forest. You reach the South Saddle with sweeping views of the coast and Wellington region. You might not stick about long, its often windy! Drop down a steep rooted track to the Matthews Stream and the major river crossing - The Orongorongo.</td>
       </tr>
       <tr>
-        <td>River</td>
-        <td>A fast run along the big bend track. You'll pass walkers out for a picnic,following alongside the Orongorongo River and Catchpool stream Entering familiar territory, easy flowing track leads to the finish.</td>
+        <td>Catchpool</td>
+        <td>A fast run along the big bend track, you'll past walkers out for a picnic, as you enter familiar territory on the Orongorongo River track to the finish.</td>
       </tr>
     </table>
   </section>
@@ -372,6 +379,20 @@ footer {
 
   L.polyline(routeCoords, { color: '#cc0000', weight: 4 }).addTo(map);
   map.setView([-41.40, 174.96], 12);
+})();
+</script>
+
+<script>
+(function() {
+  var grid = document.querySelector('.grid-overlay');
+  var scrollTimer = null;
+  window.addEventListener('scroll', function() {
+    grid.classList.add('scrolling');
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(function() {
+      grid.classList.remove('scrolling');
+    }, 150);
+  }, { passive: true });
 })();
 </script>
 
