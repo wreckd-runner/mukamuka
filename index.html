@@ -106,6 +106,18 @@ section {
   transition: transform 0.1s ease;
 }
 
+.tag-link:hover {
+  transform: scale(1.05);
+}
+
+/* Map specific header layout */
+.map-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 0; /* No padding between this and map */
+}
+
 /* THE BIG BLACK REGISTER BUTTON */
 .register-button {
   display: block;
@@ -151,6 +163,7 @@ header {
   background: transparent; 
   position: relative;
   z-index: 20; 
+  border: 0.5px solid var(--red); /* Optional: defines the map edge against the button */
 }
 
 .gpx-section {
@@ -251,8 +264,10 @@ header {
   </section>
 
   <section>
-    <span class="section-label">Course Map</span>
-    <a href=/mukamuka-munter.gpx class="tag-link">.GPX Download</a>
+    <div class="map-header">
+      <span class="section-label" style="margin-bottom: 0;">Course Map</span>
+      <a href="mukamuka-munter.gpx" download="mukamuka-munter.gpx" class="tag-link">.GPX Download</a>
+    </div>
     <div id="map"></div>
   </section>
 
