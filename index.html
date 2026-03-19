@@ -70,30 +70,43 @@ section {
   text-transform: uppercase;
 }
 
-/* Route Table Styling */
+<style>
+/* Updated Route Table Styling */
 .route-table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
+  background: transparent; /* Transparent background */
   font-size: 0.85rem;
   line-height: 1.5;
-  border: 1px solid var(--ink);
+  border: none; /* No outside border */
 }
 
 .route-table td {
-  padding: 15px;
-  border: 1px solid #eee;
+  padding: 20px 15px;
+  border: none;
   vertical-align: top;
+  color: var(--ink);
 }
 
-.route-table .label-cell {
+/* Red Horizontal Lines (between rows only) */
+.route-table tr:not(:last-child) td {
+  border-bottom: 1.5px solid var(--red);
+}
+
+/* Red Centre Column Line */
+.route-table td:first-child {
   font-weight: bold;
   text-transform: uppercase;
   color: var(--red);
-  width: 100px;
-  background: #f9f9f9;
-  border-right: 1px solid var(--ink);
+  width: 110px;
+  border-right: 1.5px solid var(--red); /* Vertical center line */
+  padding-right: 20px;
 }
+
+.route-table td:last-child {
+  padding-left: 20px;
+}
+</style>
 
 header {
   margin-bottom: 100px;
