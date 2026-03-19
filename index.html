@@ -206,6 +206,26 @@ header {
   letter-spacing: 0.15em; text-transform: uppercase; color: var(--red); 
   margin-bottom: 10px; display: block;
 }
+
+
+  footer {
+  text-align: center;
+  color: var(--gray);
+  font-size: 0.75rem;
+  padding: 40px 0;
+  border-top: 0.5px solid #eee;
+}
+
+.footer-link {
+  color: var(--gray);
+  text-decoration: none;
+  border-bottom: 1px solid var(--gray);
+}
+
+.footer-link:hover {
+  color: var(--red);
+  border-bottom-color: var(--red);
+}
 </style>
 </head>
 <body>
@@ -265,7 +285,7 @@ header {
   <section>
     <div class="map-header">
       <span class="section-label" style="margin-bottom: 0;">Course Map</span>
-      <a href="mukamuka-munter.gpx" download="mukamuka-munter.gpx" class="tag-link">.GPX Download</a>
+      <a href="mukamuka-munter.gpx" download="mukamuka-munter.gpx" class="tag-link">.GPX Download ↓</a>
     </div>
     <div id="map"></div>
   </section>
@@ -277,6 +297,12 @@ header {
   <div class="wreckd-box">
     <p>Organised by WRECKd. Public land, no trace, low fees. wreckd.runs.nz</p>
   </div>
+  
+<footer>
+    <p>Copyright Wilderness Running and Endurance Collective Inc. 2026.</p>
+    <p><a href="#" class="https://docs.google.com/spreadsheets/d/1qWbxwFqUFEQCO8JqJBO8ZSMTu-GrrKZMtKh5BTHAw4w/edit?gid=2030920892#gid=2030920892">Past results</a></p>
+  </footer>
+  
 </div>
 
 <script>
