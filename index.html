@@ -18,43 +18,54 @@ body {
   background-color: var(--paper);
   margin: 0;
   font-family: var(--font-body);
+  position: relative;
 }
 
-/* 1. THE GRID - NOW ON TOP OF MOST THINGS */
+/* GRID - Order: 10 */
 .grid-overlay {
   position: fixed;
   inset: 0;
-  pointer-events: none; /* Allows clicking through the grid */
-  z-index: 100; /* Sits on top of text and hero image */
+  pointer-events: none;
+  z-index: 10; 
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cline x1='24' y1='20' x2='24' y2='28' stroke='%23cc0000' stroke-width='1'/%3E%3Cline x1='20' y1='24' x2='28' y2='24' stroke='%23cc0000' stroke-width='1'/%3E%3C/svg%3E");
   background-size: 48px 48px;
 }
 
+/* PAGE WRAPPER - Order: 15 */
 .page {
   position: relative;
-  z-index: 10; 
+  z-index: 15; 
   max-width: 680px;
   margin: 0 auto;
   padding: 40px 32px 120px;
 }
 
-/* 2. Header Content (Behind Grid) */
+/* BODY TEXT / SECTION - Order: 5 (Behind Grid) */
+section { 
+  margin-bottom: 60px; 
+  position: relative;
+  z-index: 5; 
+}
+
+/* HEADER AREA */
 header {
   margin-bottom: 100px;
   position: relative;
   height: 300px;
   border: 1.5px solid var(--ink);
-  z-index: 1; /* Below grid */
 }
 
+/* HERO IMAGE - Order: 20 */
 .header-bg {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  z-index: 20;
 }
 
+/* LOGO - Order: 25 */
 .logo-wrap {
   position: absolute;
   top: 40%;
@@ -64,86 +75,54 @@ header {
   padding: 15px 25px;
   border: 2px solid var(--ink);
   box-shadow: 10px 10px 0 var(--red);
-  z-index: 200; /* Logo stays on top of grid */
+  z-index: 25; 
 }
 
 .logo-mukamuka {
   font-family: 'Georgia', serif;
-  font-style: italic;
-  font-weight: bold;
+  font-style: italic; font-weight: bold;
   font-size: clamp(2rem, 6vw, 3.5rem);
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--red);
-  line-height: 0.9;
-  display: block;
+  color: transparent; -webkit-text-stroke: 1.5px var(--red);
+  line-height: 0.9; display: block;
 }
-
 .logo-munter {
   font-family: 'Georgia', serif;
-  font-weight: bold;
-  font-size: clamp(2.2rem, 7vw, 4rem);
-  color: var(--red);
-  line-height: 0.8;
-  text-transform: uppercase;
-  display: block;
+  font-weight: bold; font-size: clamp(2.2rem, 7vw, 4rem);
+  color: var(--red); line-height: 0.8;
+  text-transform: uppercase; display: block;
 }
 
-/* 3. MAP & RED BOX - IN FRONT OF GRID */
+/* IFRAME / MAP - Order: 20 */
 #map { 
   width: 100%; 
   height: 420px; 
   border: 1.5px solid var(--red); 
   background: white;
   position: relative;
-  z-index: 200; /* Jumps in front of the grid */
+  z-index: 20; 
 }
 
+/* RED BOX - Order: 20 */
 .wreckd-box {
   position: relative;
   background: var(--red);
   color: white;
   padding: 30px;
   box-shadow: 12px 12px 0 var(--ink);
-  z-index: 200; /* Jumps in front of the grid */
+  z-index: 20; 
 }
 
-/* 4. TEXT CONTENT - BEHIND GRID */
-section { 
-  margin-bottom: 60px; 
-  position: relative;
-  z-index: 1; /* Grid lines will cross over this */
-}
-
+/* OTHER UI */
 .section-label { 
-  font-family: sans-serif;
-  font-size: 0.75rem; 
-  font-weight: 900;
-  letter-spacing: 0.15em; 
-  text-transform: uppercase; 
-  color: var(--red); 
-  margin-bottom: 15px;
-  display: block;
+  font-family: sans-serif; font-size: 0.75rem; font-weight: 900;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--red); 
+  margin-bottom: 15px; display: block;
 }
-
-.body-text { 
-  font-size: 0.9rem; 
-  line-height: 1.7; 
-  color: var(--ink); 
-  background: white; 
-  padding: 10px; 
-}
-
+.body-text { font-size: 0.9rem; line-height: 1.7; color: var(--ink); background: white; padding: 10px; }
 .enter-link { 
-  display: block; 
-  text-align: center;
-  background: var(--ink); 
-  color: white; 
-  padding: 20px; 
-  text-decoration: none;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  z-index: 200;
-  position: relative;
+  display: block; text-align: center; background: var(--ink); color: white; 
+  padding: 20px; text-decoration: none; font-size: 0.85rem; text-transform: uppercase;
+  position: relative; z-index: 20;
 }
 </style>
 </head>
@@ -181,11 +160,7 @@ section {
 
 <script>
 (function() {
-  var map = L.map('map', { 
-    zoomControl: true, 
-    scrollWheelZoom: false 
-  });
-
+  var map = L.map('map', { zoomControl: true, scrollWheelZoom: false });
   var KEY = 'ac0b45ad4df545989a25eddd3c77ab6e';
 
   L.tileLayer('https://basemaps.linz.govt.nz/v1/tiles/scanned-aerial-imagery-pre-1990-01-01/WebMercatorQuad/{z}/{x}/{y}.webp?api=' + KEY, {
@@ -197,7 +172,6 @@ section {
 
   L.polyline(routeCoords, { color: '#cc0000', weight: 4 }).addTo(map);
   map.setView([-41.40, 174.96], 12);
-
 })();
 </script>
 
